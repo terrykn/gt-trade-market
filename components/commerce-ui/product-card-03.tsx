@@ -7,6 +7,7 @@ interface Item {
   item_id?: number;
   name?: string;
   player?: string;
+  unit?: string;
   price?: number;
   quantity?: number;
   world?: string;
@@ -49,7 +50,7 @@ function ProductCard_03({
             {item?.name}
           </h3>
           <div>
-            {item?.quantity} for {item?.price}
+            {item?.quantity} for {item?.price} {item?.unit}
           </div>
           <div>
             <p className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400">

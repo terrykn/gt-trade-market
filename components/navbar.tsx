@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Menu, User, X } from "lucide-react";
+import { LogOut, Menu, X } from "lucide-react";
 
 import {
   NavigationMenu,
@@ -18,6 +18,11 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { DarkModeToggle } from "./darkmode-toggle";
 import pagesData from '@/data/pages.json';
+
+import { auth } from "@/lib/firebase";
+import { signOut } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { DarkModeToggleText } from "./darkmode-toggle-text";
 
 const pages = pagesData;
 
@@ -57,6 +62,13 @@ function ListItem({ title, href, subcategories }: ListItemProps) {
 }
 
 export function Navbar() {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    router.push("/login");
+  };
+
   const [mobileOpen, setMobileOpen] = useState(false);
   return (
     <nav className="border-b">
@@ -109,11 +121,9 @@ export function Navbar() {
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
-                  <Link href="/profile" className="text-sm font-medium">
-                    <Button variant="outline" size="icon">
-                      <User />
-                    </Button>
-                  </Link>
+                  <Button className="mr-2" variant="outline" size="icon" onClick={handleLogout}>
+                    <LogOut />
+                  </Button>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -127,9 +137,15 @@ export function Navbar() {
           <Link href="/listings" className="text-sm font-medium">
             My Listings
           </Link>
-          <Link href="/profile" className="text-sm font-medium">
-            Profile
-          </Link>
+          <div className="text-sm font-medium">
+            <button
+              onClick={handleLogout}
+              className="cursor-pointer"
+            >
+              Log Out
+            </button>
+          </div>
+          <DarkModeToggleText />
           <div className="flex flex-row gap-2">
             <Input placeholder="Search..." />
             <Button>Search</Button>

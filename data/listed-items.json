@@ -4,8 +4,9 @@
             {
                 "name": "Dirt",
                 "player": "CoolGuy",
-                "price": 200,
-                "quantity": 2,
+                "unit": "WL",
+                "price": 5,
+                "quantity": 1,
                 "world": "PUQY",
                 "imageUrl": "https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/3456/y-offset/160/window-width/32/window-height/32?format=png&fill=cb-20250605082111"
             }
