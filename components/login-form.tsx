@@ -13,6 +13,8 @@ import {
 import React from "react";
 import { useRouter } from "next/navigation";
 
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
 export function LoginForm({
   className,
   ...props
@@ -21,7 +23,15 @@ export function LoginForm({
   const router = useRouter();
 
   const handleGoogleLogin = async () => {
-    router.push("/");
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      // User is logged in, you can redirect or update UI here
+      router.push("/"); // Redirect to home page after successful login
+    } catch (error) {
+      console.error("Error during Google login:", error);
+    }
   }
 
   return (
