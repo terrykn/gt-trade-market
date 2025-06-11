@@ -1,0 +1,670 @@
+[
+    {
+        "title": "Blocks",
+        "href": "/blocks",
+        "subcategories": [
+            {
+                "title": "Foreground Blocks",
+                "href": "/blocks/foreground-blocks"
+            },
+            {
+                "title": "Background Blocks",
+                "href": "/blocks/background-blocks"
+            },
+            {
+                "title": "Non-solid Blocks",
+                "href": "/blocks/non-solid-blocks"
+            },
+            {
+                "title": "Doors",
+                "href": "/blocks/doors"
+            },
+            {
+                "title": "Locks",
+                "href": "/blocks/locks"
+            },
+            {
+                "title": "Seats",
+                "href": "/blocks/seats"
+            },
+            {
+                "title": "Treasure Blocks",
+                "href": "/blocks/treasure-blocks"
+            },
+            {
+                "title": "Deadly Blocks",
+                "href": "/blocks/deadly-blocks"
+            },
+            {
+                "title": "Trampoline Blocks",
+                "href": "/blocks/trampoline-blocks"
+            },
+            {
+                "title": "Consumables",
+                "href": "/blocks/consumables"
+            },
+            {
+                "title": "Entrances",
+                "href": "/blocks/entrances"
+            },
+            {
+                "title": "Signs",
+                "href": "/blocks/signs"
+            },
+            {
+                "title": "Platforms",
+                "href": "/blocks/platforms"
+            },
+            {
+                "title": "Pain Blocks (Lava)",
+                "href": "/blocks/pain-blocks-lava"
+            },
+            {
+                "title": "Pain Blocks (Acid)",
+                "href": "/blocks/pain-blocks-acid"
+            },
+            {
+                "title": "Bouncy Blocks",
+                "href": "/blocks/bouncy-blocks"
+            },
+            {
+                "title": "Pain Blocks (Spike)",
+                "href": "/blocks/pain-blocks-spike"
+            },
+            {
+                "title": "Portals",
+                "href": "/blocks/portals"
+            },
+            {
+                "title": "Checkpoints",
+                "href": "/blocks/checkpoints"
+            },
+            {
+                "title": "Sheet Music",
+                "href": "/blocks/sheet-music"
+            },
+            {
+                "title": "Slippery Blocks",
+                "href": "/blocks/slippery-blocks"
+            },
+            {
+                "title": "Toggleable Blocks",
+                "href": "/blocks/toggleable-blocks"
+            },
+            {
+                "title": "Chests",
+                "href": "/blocks/chests"
+            },
+            {
+                "title": "Mailboxes",
+                "href": "/blocks/mailboxes"
+            },
+            {
+                "title": "Bulletin Boards",
+                "href": "/blocks/bulletin-boards"
+            },
+            {
+                "title": "Event Mystery Blocks",
+                "href": "/blocks/event-mystery-blocks"
+            },
+            {
+                "title": "Random Blocks",
+                "href": "/blocks/random-blocks"
+            },
+            {
+                "title": "Components",
+                "href": "/blocks/components"
+            },
+            {
+                "title": "Providers",
+                "href": "/blocks/providers"
+            },
+            {
+                "title": "Chemical Combiners",
+                "href": "/blocks/chemical-combiners"
+            },
+            {
+                "title": "Weather Machines",
+                "href": "/blocks/weather-machines"
+            },
+            {
+                "title": "Donation Boxes",
+                "href": "/blocks/donation-boxes"
+            },
+            {
+                "title": "Mannequins",
+                "href": "/blocks/mannequins"
+            },
+            {
+                "title": "Security Cameras",
+                "href": "/blocks/security-cameras"
+            },
+            {
+                "title": "Game Blocks",
+                "href": "/blocks/game-blocks"
+            },
+            {
+                "title": "Crystals",
+                "href": "/blocks/crystals"
+            },
+            {
+                "title": "Pushing Blocks",
+                "href": "/blocks/pushing-blocks"
+            },
+            {
+                "title": "Fishes",
+                "href": "/blocks/fishes"
+            },
+            {
+                "title": "Cooking Ovens",
+                "href": "/blocks/cooking-ovens"
+            },
+            {
+                "title": "Autobreaking Blocks",
+                "href": "/blocks/autobreaking-blocks"
+            },
+            {
+                "title": "Toggleable Multi-Framed Animated Foreground Blocks",
+                "href": "/blocks/toggleable-animated-foreground-blocks"
+            }
+        ]
+    },
+    {
+        "title": "Clothes",
+        "href": "/clothes",
+        "subcategories": [
+            {
+                "title": "Hat",
+                "href": "/clothes/hat"
+            },
+            {
+                "title": "Hair",
+                "href": "/clothes/hair"
+            },
+            {
+                "title": "Face",
+                "href": "/clothes/face"
+            },
+            {
+                "title": "Chest",
+                "href": "/clothes/chest"
+            },
+            {
+                "title": "Shirt",
+                "href": "/clothes/shirt"
+            },
+            {
+                "title": "Pants",
+                "href": "/clothes/pants"
+            },
+            {
+                "title": "Feet",
+                "href": "/clothes/feet"
+            },
+            {
+                "title": "Back",
+                "href": "/clothes/back"
+            },
+            {
+                "title": "Hand",
+                "href": "/clothes/hand"
+            }
+        ]
+    },
+    {
+        "title": "Artifacts",
+        "href": "/artifacts",
+        "subcategories": [
+            {
+                "title": "Double Jump",
+                "href": "/artifacts/double-jump"
+            },
+            {
+                "title": "High Jump",
+                "href": "/artifacts/high-jump"
+            },
+            {
+                "title": "Speedy",
+                "href": "/artifacts/speedy"
+            },
+            {
+                "title": "Punch Damage",
+                "href": "/artifacts/punch-damage"
+            },
+            {
+                "title": "Punch Range",
+                "href": "/artifacts/punch-range"
+            },
+            {
+                "title": "Punch Power",
+                "href": "/artifacts/punch-power"
+            },
+            {
+                "title": "Punch Pull",
+                "href": "/artifacts/punch-pull"
+            },
+            {
+                "title": "Slow Fall",
+                "href": "/artifacts/slow-fall"
+            },
+            {
+                "title": "Damage Reduction",
+                "href": "/artifacts/damage-reduction"
+            },
+            {
+                "title": "Build Range",
+                "href": "/artifacts/build-range"
+            },
+            {
+                "title": "Light Source",
+                "href": "/artifacts/light-source"
+            },
+            {
+                "title": "Wall Climbing",
+                "href": "/artifacts/wall-climbing"
+            },
+            {
+                "title": "Fire Hose",
+                "href": "/artifacts/fire-hose"
+            },
+            {
+                "title": "Fireproof",
+                "href": "/artifacts/fireproof"
+            },
+            {
+                "title": "Ghost Immunity",
+                "href": "/artifacts/ghost-immunity"
+            },
+            {
+                "title": "Healing",
+                "href": "/artifacts/healing"
+            },
+            {
+                "title": "Knock Back Reduction",
+                "href": "/artifacts/knock-back-reduction"
+            },
+            {
+                "title": "Tree Harvesting",
+                "href": "/artifacts/tree-harvesting"
+            },
+            {
+                "title": "Slippery",
+                "href": "/artifacts/slippery"
+            },
+            {
+                "title": "XP Buff",
+                "href": "/artifacts/xp-buff"
+            },
+            {
+                "title": "Speedy in Water",
+                "href": "/artifacts/speedy-in-water"
+            },
+            {
+                "title": "Float on Water",
+                "href": "/artifacts/float-on-water"
+            },
+            {
+                "title": "Night Vision",
+                "href": "/artifacts/night-vision"
+            },
+            {
+                "title": "Extra Gems",
+                "href": "/artifacts/extra-gems"
+            },
+            {
+                "title": "Extra Blocks",
+                "href": "/artifacts/extra-blocks"
+            },
+            {
+                "title": "Skin Color",
+                "href": "/artifacts/skin-color"
+            },
+            {
+                "title": "Miscellaneous",
+                "href": "/artifacts/miscellaneous"
+            }
+        ]
+    },
+    {
+        "title": "Other",
+        "href": "/other",
+        "subcategories": [
+            {
+                "title": "Morph",
+                "href": "/other/morph"
+            },
+            {
+                "title": "Musical",
+                "href": "/other/musical"
+            },
+            {
+                "title": "Pets",
+                "href": "/other/pets"
+            }
+        ]
+    },
+    {
+        "title": "Mechanics",
+        "href": "/mechanics",
+        "subcategories": [
+            {
+                "title": "Account",
+                "href": "/mechanics/account"
+            },
+            {
+                "title": "Player Titles",
+                "href": "/mechanics/player-titles"
+            },
+            {
+                "title": "Wrench",
+                "href": "/mechanics/wrench"
+            },
+            {
+                "title": "Supporter",
+                "href": "/mechanics/supporter"
+            },
+            {
+                "title": "Chat",
+                "href": "/mechanics/chat"
+            },
+            {
+                "title": "Broadcast",
+                "href": "/mechanics/broadcast"
+            },
+            {
+                "title": "Gems",
+                "href": "/mechanics/gems"
+            },
+            {
+                "title": "Growtokens",
+                "href": "/mechanics/growtokens"
+            },
+            {
+                "title": "Grow Vouchers",
+                "href": "/mechanics/grow-vouchers"
+            },
+            {
+                "title": "Growtopia Store",
+                "href": "/mechanics/growtopia-store"
+            },
+            {
+                "title": "Telephone",
+                "href": "/mechanics/telephone"
+            },
+            {
+                "title": "Quests",
+                "href": "/mechanics/quests"
+            },
+            {
+                "title": "Grow Pass",
+                "href": "/mechanics/grow-pass"
+            },
+            {
+                "title": "Mentorship",
+                "href": "/mechanics/mentorship"
+            },
+            {
+                "title": "Guilds",
+                "href": "/mechanics/guilds"
+            },
+            {
+                "title": "Splicing",
+                "href": "/mechanics/splicing"
+            },
+            {
+                "title": "Combining",
+                "href": "/mechanics/combining"
+            },
+            {
+                "title": "Forging",
+                "href": "/mechanics/forging"
+            },
+            {
+                "title": "Crystals",
+                "href": "/mechanics/crystals"
+            },
+            {
+                "title": "Chemsynth",
+                "href": "/mechanics/chemsynth"
+            },
+            {
+                "title": "DNA Combinations",
+                "href": "/mechanics/dna-combinations"
+            },
+            {
+                "title": "Cooking",
+                "href": "/mechanics/cooking"
+            },
+            {
+                "title": "Silkworm Care",
+                "href": "/mechanics/silkworm-care"
+            },
+            {
+                "title": "Sewing",
+                "href": "/mechanics/sewing"
+            },
+            {
+                "title": "Crimefighting",
+                "href": "/mechanics/crimefighting"
+            },
+            {
+                "title": "Surgery",
+                "href": "/mechanics/surgery"
+            },
+            {
+                "title": "Startopia",
+                "href": "/mechanics/startopia"
+            },
+            {
+                "title": "Fishing",
+                "href": "/mechanics/fishing"
+            },
+            {
+                "title": "Fish & Crab Training",
+                "href": "/mechanics/fish-and-crab-training"
+            },
+            {
+                "title": "Lobster Trap",
+                "href": "/mechanics/lobster-trap"
+            },
+            {
+                "title": "Geiger Counting",
+                "href": "/mechanics/geiger-counting"
+            },
+            {
+                "title": "Egg-Hunting",
+                "href": "/mechanics/egg-hunting"
+            },
+            {
+                "title": "Firefighting",
+                "href": "/mechanics/firefighting"
+            },
+            {
+                "title": "Treasure Hunting",
+                "href": "/mechanics/treasure-hunting"
+            },
+            {
+                "title": "Ancestral Riddles",
+                "href": "/mechanics/ancestral-riddles"
+            },
+            {
+                "title": "Steam",
+                "href": "/mechanics/steam"
+            },
+            {
+                "title": "Mines",
+                "href": "/mechanics/mines"
+            },
+            {
+                "title": "Games",
+                "href": "/mechanics/games"
+            },
+            {
+                "title": "Pet Battles",
+                "href": "/mechanics/pet-battles"
+            },
+            {
+                "title": "Dyes",
+                "href": "/mechanics/dyes"
+            },
+            {
+                "title": "Dungeons",
+                "href": "/mechanics/dungeons"
+            },
+            {
+                "title": "Contact Lens",
+                "href": "/mechanics/contact-lens"
+            }
+        ]
+    },
+    {
+        "title": "Yearly Events",
+        "href": "/yearly-events",
+        "subcategories": [
+            {
+                "title": "Anniversary Week",
+                "href": "/yearly-events/anniversary-week"
+            },
+            {
+                "title": "UbiWeek",
+                "href": "/yearly-events/ubiweek"
+            },
+            {
+                "title": "Lunar New Year",
+                "href": "/yearly-events/lunar-new-year"
+            },
+            {
+                "title": "Valentine's Week",
+                "href": "/yearly-events/valentines-week"
+            },
+            {
+                "title": "St. Patrick's Week",
+                "href": "/yearly-events/st-patricks-week"
+            },
+            {
+                "title": "Easter Week",
+                "href": "/yearly-events/easter-week"
+            },
+            {
+                "title": "Grow4Good Week",
+                "href": "/yearly-events/grow4good-week"
+            },
+            {
+                "title": "Cinco De Mayo Week",
+                "href": "/yearly-events/cinco-de-mayo-week"
+            },
+            {
+                "title": "Super Pineapple Party",
+                "href": "/yearly-events/super-pineapple-party"
+            },
+            {
+                "title": "Beach Party",
+                "href": "/yearly-events/beach-party"
+            },
+            {
+                "title": "SummerFest",
+                "href": "/yearly-events/summerfest"
+            },
+            {
+                "title": "Garuda's Glory",
+                "href": "/yearly-events/garudas-glory"
+            },
+            {
+                "title": "Player Appreciation Week",
+                "href": "/yearly-events/player-appreciation-week"
+            },
+            {
+                "title": "Harvest Festival",
+                "href": "/yearly-events/harvest-festival"
+            },
+            {
+                "title": "Wonder Week",
+                "href": "/yearly-events/wonder-week"
+            },
+            {
+                "title": "Halloween",
+                "href": "/yearly-events/halloween"
+            },
+            {
+                "title": "Aliens",
+                "href": "/yearly-events/aliens"
+            },
+            {
+                "title": "Thanksgiving Week",
+                "href": "/yearly-events/thanksgiving-week"
+            },
+            {
+                "title": "Black Friday",
+                "href": "/yearly-events/black-friday"
+            },
+            {
+                "title": "WinterFest",
+                "href": "/yearly-events/winterfest"
+            },
+            {
+                "title": "Balloon Warz",
+                "href": "/yearly-events/balloon-warz"
+            }
+        ]
+    },
+    {
+        "title": "Monthly Events",
+        "href": "/monthly-events",
+        "subcategories": [
+            {
+                "title": "Carnival",
+                "href": "/monthly-events/carnival"
+            },
+            {
+                "title": "Night Of The Comet",
+                "href": "/monthly-events/night-of-the-comet"
+            },
+            {
+                "title": "Locke The Salesman",
+                "href": "/monthly-events/locke-the-salesman"
+            },
+            {
+                "title": "The Grand Tournament",
+                "href": "/monthly-events/the-grand-tournament"
+            },
+            {
+                "title": "Surgery Day",
+                "href": "/monthly-events/surgery-day"
+            },
+            {
+                "title": "All Howl's Eve",
+                "href": "/monthly-events/all-howls-eve"
+            },
+            {
+                "title": "Geiger Day",
+                "href": "/monthly-events/geiger-day"
+            },
+            {
+                "title": "Ghost Day",
+                "href": "/monthly-events/ghost-day"
+            },
+            {
+                "title": "Mutant Kitchen",
+                "href": "/monthly-events/mutant-kitchen"
+            },
+            {
+                "title": "Voucher Dayz",
+                "href": "/monthly-events/voucher-dayz"
+            },
+            {
+                "title": "G-Virus Pandemic",
+                "href": "/monthly-events/g-virus-pandemic"
+            }
+        ]
+    },
+    {
+        "title": "Daily Events",
+        "href": "/daily-events",
+        "subcategories": [
+            {
+                "title": "Daily Challenges",
+                "href": "/daily-events/daily-challenges"
+            }
+        ]
+    }
+]
