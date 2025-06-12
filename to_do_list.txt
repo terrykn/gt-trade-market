@@ -1,2 +1,18 @@
-1. Add parameters unit price (in WL) and listing date to listed item interface
-2. search bar
+* Fix [category]/[subcategory] page.tsx fetching from AllListings (standardize the name formatting for comparison)
+* Render user's listings in My Listings
+* Capitalize all world names
+* Make fields required in the create listings form
+* Implement unit price for each listed item
+* Display category and subcategory in search bar preview (similar to item name autocomplete)
+* Display time duration for listed items and show NEW icon if the item has just been listed in the last hour
+* Implement world listings
+* Implement default featured main page with all listings, worlds, and other cool stuff
+* Implement searching feature
+* Implement sorting once searched OR inside a subcategory
+* Scrape all items and update json fields
+* Use my source to scrape all Growtopians world advertising content and input into listings
+* Host the site
+* Implement protection, prevent extreme usage of the site
+* Implement ads
+* Implement payment option for additional listings
+* Domain name integration
