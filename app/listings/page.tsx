@@ -28,13 +28,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator";
 
-import { Item } from "../[category]/[subcategory]/page";
 import { ListedItem } from "../[category]/[subcategory]/page";
-import { Items } from "../[category]/[subcategory]/page";
-import { ListedItems } from "../[category]/[subcategory]/page";
 
 import { db } from "@/lib/firebase";
-import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, deleteDoc, doc, setDoc } from "firebase/firestore";
 import { useAuth } from "@/context/auth-context";
 
 import { useRouter } from "next/navigation";
@@ -46,7 +43,7 @@ import {
     AlertTitle,
 } from "@/components/ui/alert"
 
-import { CheckCircle2Icon } from "lucide-react";
+import { CheckCircle2Icon, Trash2 } from "lucide-react";
 import { AlertCircle } from "lucide-react";
 import ItemNameAutocomplete from "@/components/item-name-autocomplete";
 import ProductCard_03Preview from "@/components/commerce-ui/product-card-03-preview";
@@ -67,8 +64,9 @@ export default function ListingsPage() {
     const [subcategory, setSubcategory] = useState("");
 
     const [listedItems, setListedItems] = useState<ListedItem[]>([]);
-
+    const [selectedListingId, setSelectedListingId] = useState("");
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
     const [alert, setAlert] = useState<{
         type: "success" | "error";
@@ -78,17 +76,12 @@ export default function ListingsPage() {
 
     const { user, loading } = useAuth();
     const router = useRouter();
-    console.log(user?.displayName);
 
     useEffect(() => {
         if (!loading && !user) {
             router.push("/login");
         }
     }, [loading, user, router]);
-
-    if (loading || !user) {
-        return <div>Loading...</div>;
-    }
 
     useEffect(() => {
         if (alert) {
@@ -97,6 +90,65 @@ export default function ListingsPage() {
         }
     }, [alert]);
 
+    useEffect(() => {
+        if (user) fetchUserListings();
+    }, [user]);
+
+    useEffect(() => {
+        if (!quantity || !price || !unit) {
+            setUnitPrice("");
+            return;
+        }
+        let priceInWL = Number(price);
+        if (unit === "DL") priceInWL = Number(price) * 100;
+        if (unit === "BGL") priceInWL = Number(price) * 100 * 100;
+        if (Number(quantity) > 0) {
+            setUnitPrice((priceInWL / Number(quantity)).toString());
+        } else {
+            setUnitPrice("");
+        }
+    }, [quantity, price, unit]);
+
+    if (loading || !user) {
+        return <div>Loading...</div>;
+    }
+
+    const handleDelete = async (listingId: string) => {
+        if (!user) {
+            setAlert({
+                type: "error",
+                title: "Authentication error",
+                description: "You must be logged in to delete a listing.",
+            });
+            return;
+        }
+
+        try {
+            // delete from user's subcollection
+            await deleteDoc(doc(db, "users", user.uid, "listings", listingId));
+
+            // delete from AllListings
+            await deleteDoc(doc(db, "AllListings", listingId));
+
+            // refresh local state
+            setListedItems(prev => prev.filter(item => item.id !== listingId));
+
+            setAlert({
+                type: "success",
+                title: "Listing deleted",
+                description: "The listing was successfully removed.",
+            });
+
+            setDeleteDialogOpen(false);
+        } catch (err) {
+            console.error("Failed to delete listing:", err);
+            setAlert({
+                type: "error",
+                title: "Failed to delete listing",
+                description: "Please try again later.",
+            });
+        }
+    };
 
     const handleCreate = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -125,11 +177,13 @@ export default function ListingsPage() {
         };
 
         try {
-            await addDoc(
-                collection(db, "users", user.uid, "listings"),
-                newListing
-            );
-            await addDoc(collection(db, "AllListings"), newListing);
+            // generate a shared ID
+            const newDocRef = doc(collection(db, "users", user.uid, "listings"));
+
+            // use the same ID for both collections
+            await setDoc(newDocRef, newListing);
+            await setDoc(doc(db, "AllListings", newDocRef.id), newListing);
+
             setAlert({
                 type: "success",
                 title: "Listing created!",
@@ -154,6 +208,7 @@ export default function ListingsPage() {
             const q = query(collection(db, "users", user.uid, "listings"));
             const snapshot = await getDocs(q);
             const listings: ListedItem[] = snapshot.docs.map(doc => ({
+                id: doc.id,
                 ...doc.data(),
                 createdAt: doc.data().createdAt?.toDate?.() || new Date(),
             })) as ListedItem[];
@@ -168,25 +223,6 @@ export default function ListingsPage() {
             });
         }
     };
-
-    useEffect(() => {
-        fetchUserListings();
-    }, [user]);
-
-    useEffect(() => {
-        if (!quantity || !price || !unit) {
-            setUnitPrice("");
-            return;
-        }
-        let priceInWL = Number(price);
-        if (unit === "DL") priceInWL = Number(price) * 100;
-        if (unit === "BGL") priceInWL = Number(price) * 100 * 100;
-        if (Number(quantity) > 0) {
-            setUnitPrice((priceInWL / Number(quantity)).toString());
-        } else {
-            setUnitPrice("");
-        }
-    }, [quantity, price, unit]);
 
     return (
         <div>
@@ -287,6 +323,8 @@ export default function ListingsPage() {
                                             <div className="w-full max-w-[200px] mx-auto">
                                                 <ProductCard_03Preview
                                                     item={{
+                                                        id: selectedListingId,
+                                                        userId: user.uid,
                                                         name,
                                                         quantity: Number(quantity),
                                                         price: Number(price),
@@ -320,7 +358,35 @@ export default function ListingsPage() {
                 ) : (
                     <ul className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-4">
                         {listedItems.map((item, index) => (
-                            <ProductCard_03 key={index} item={item} />
+                            <div key={index}>
+                                <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+                                    <DialogContent className="sm:max-w-[425px]">
+                                        <DialogHeader className="mb-6">
+                                            <DialogTitle>Delete Listing</DialogTitle>
+                                            <DialogDescription>
+                                                Are you sure you want to delete this listing?
+                                            </DialogDescription>
+                                        </DialogHeader>
+                                        <div className="w-full max-w-[200px] mx-auto">
+                                            <ProductCard_03 key={index} item={item} />
+                                        </div>
+                                        <DialogFooter className="mt-6">
+                                            <DialogClose asChild>
+                                                <Button>Cancel</Button>
+                                            </DialogClose>
+                                            <Button variant="destructive" onClick={() => handleDelete(item.id)}>Delete</Button>
+                                        </DialogFooter>
+                                    </DialogContent>
+                                </Dialog>
+                                <div className="group relative flex w-full flex-col overflow-hidden rounded-xl">
+                                    <div className="absolute top-3 right-3 z-10">
+                                        <Button size="sm" className="bg-gradient-to-r from-red-500 to-red-700 text-white" onClick={() => setDeleteDialogOpen(true)}>
+                                            <Trash2 />
+                                        </Button>
+                                    </div>
+                                    <ProductCard_03 key={index} item={item} />
+                                </div>
+                            </div>
                         ))}
                     </ul>
                 )}

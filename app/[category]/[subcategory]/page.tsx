@@ -11,6 +11,7 @@ import { Navbar } from "@/components/navbar";
 import { Timestamp } from "firebase/firestore";
 
 export type ListedItem = {
+  id: string;
   userId: string;
   name: string;
   unit: string;

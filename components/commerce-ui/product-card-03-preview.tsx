@@ -58,7 +58,7 @@ function ProductCard_03Preview({
       <div className="relative overflow-hidden bg-gradient-to-br from-blue-50 to-purple-50 p-6 dark:from-blue-950/30 dark:to-purple-950/30">
         <div className="absolute -bottom-10 left-1/2 h-40 w-40 -translate-x-1/2 transform rounded-full bg-rose-500/20 blur-3xl"></div>
         <div className="flex justify-center items-center transition-transform duration-500 group-hover:scale-105">
-          <Image src={item?.imageUrl} width={60} height={60} priority alt={item?.name}/>
+          <Image src={item?.imageUrl ?? "https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/2912/y-offset/224/window-width/32/window-height/32?format=png&fill=cb-20250605082111"} width={60} height={60} priority alt={item?.name ?? "item image"}/>
         </div>
       </div>
 

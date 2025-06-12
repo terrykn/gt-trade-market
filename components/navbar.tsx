@@ -151,7 +151,7 @@ export function Navbar() {
           <div>
             <ul className="max-h-64 overflow-y-auto">
               {pages.map((page) => (
-                <div>
+                <div key={page.title}>
                   <div className="text-sm leading-none font-medium">{page.title}</div>
                   {page.subcategories && page.subcategories.length > 0 && (
                     <ul className="mt-2 mb-2 space-y-1">
