@@ -7,8 +7,10 @@ import ProductCard_03 from "@/components/commerce-ui/product-card-03";
 
 import {
     Dialog,
+    DialogClose,
     DialogContent,
     DialogDescription,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -26,43 +28,119 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator";
 
-type Item = {
-    name: string;
-    imageUrl: string;
-};
+import { Item } from "../[category]/[subcategory]/page";
+import { ListedItem } from "../[category]/[subcategory]/page";
+import { Items } from "../[category]/[subcategory]/page";
+import { ListedItems } from "../[category]/[subcategory]/page";
 
-type ListedItem = {
-    name: string;
-    player: string;
-    price: number;
-    quantity: number;
-    world: string;
-    imageUrl: string;
-};
+import { db } from "@/lib/firebase";
+import { collection, addDoc } from "firebase/firestore";
+import { useAuth } from "@/context/auth-context";
 
-type Items = {
-    [category: string]: {
-        [subcategory: string]: Item[];
-    };
-};
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-type ListedItems = {
-    [category: string]: {
-        [subcategory: string]: ListedItem[];
-    };
-};
+import {
+    Alert,
+    AlertDescription,
+    AlertTitle,
+} from "@/components/ui/alert"
+
+import { CheckCircle2Icon } from "lucide-react";
+import { AlertCircle } from "lucide-react";
+import ItemNameAutocomplete from "@/components/item-name-autocomplete";
+import ProductCard_03Preview from "@/components/commerce-ui/product-card-03-preview";
 
 interface Props {
     params: { category: string; subcategory: string };
 }
 
 export default function ListingsPage() {
-    const [player, setPlayer] = useState("");
     const [world, setWorld] = useState("");
     const [name, setName] = useState("");
-    const [quantity, setQuantity] = useState("");
-    const [price, setPrice] = useState("");
-    const [unit, setUnit] = useState("");
+    const [quantity, setQuantity] = useState(1);
+    const [price, setPrice] = useState(1);
+    const [unit, setUnit] = useState("WL");
+    const [unitPrice, setUnitPrice] = useState("");
+    const [imageUrl, setImageUrl] = useState("https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/2912/y-offset/224/window-width/32/window-height/32?format=png&fill=cb-20250605082111");
+    const [category, setCategory] = useState("");
+    const [subcategory, setSubcategory] = useState("");
+
+
+    const [alert, setAlert] = useState<{
+        type: "success" | "error";
+        title: string;
+        description: string;
+    } | null>(null);
+
+    const { user, loading } = useAuth();
+    const router = useRouter();
+    console.log(user?.displayName);
+
+    useEffect(() => {
+        if (!loading && !user) {
+            router.push("/login");
+        }
+    }, [loading, user, router]);
+
+    if (loading || !user) {
+        return <div>Loading...</div>;
+    }
+
+    useEffect(() => {
+        if (alert) {
+            const timer = setTimeout(() => setAlert(null), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [alert]);
+
+
+    const handleCreate = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!user) {
+            setAlert({
+                type: "error",
+                title: "Authentication error",
+                description: "You must be logged in to create a listing.",
+            });
+            return;
+        }
+
+        const newListing = {
+            userId: user.uid,
+            name,
+            quantity: Number(quantity),
+            price: Number(price),
+            unit,
+            unitPrice: Number(unitPrice),
+            world,
+            imageUrl,
+            category,
+            subcategory,
+            createdAt: new Date(),
+        };
+
+        try {
+            await addDoc(
+                collection(db, "users", user.uid, "listings"),
+                newListing
+            );
+            await addDoc(collection(db, "AllListings"), newListing);
+            setAlert({
+                type: "success",
+                title: "Listing created!",
+                description: "Your new listing was added successfully.",
+            });
+        } catch (err) {
+            console.error("Error creating listing:", err);
+            setAlert({
+                type: "error",
+                title: "Failed to create listing.",
+                description: "Please try again later.",
+            });
+        }
+    };
 
     return (
         <div>
@@ -70,83 +148,133 @@ export default function ListingsPage() {
             <div className="p-6">
                 <div className="flex flex-row items-center gap-4">
                     <h2 className="text-xl font-bold mb-4">My Listings</h2>
-
-
+                    {alert && (
+                        <div
+                            style={{
+                                position: "fixed",
+                                bottom: 20,
+                                left: "50%",
+                                transform: "translateX(-50%)",
+                                zIndex: 9999,
+                                width: "auto",
+                                maxWidth: "90vw",
+                            }}
+                        >
+                            <Alert
+                                variant={alert.type === "success" ? "default" : "destructive"}
+                                className="flex items-center shadow-lg"
+                            >
+                                {alert.type === "success" ? (
+                                    <CheckCircle2Icon className="mr-2 h-6 w-6 text-green-600" />
+                                ) : (
+                                    <AlertCircle className="mr-2 h-6 w-6 text-red-600" />
+                                )}
+                                <AlertTitle>{alert.title}</AlertTitle>
+                                <AlertDescription>{alert.description}</AlertDescription>
+                            </Alert>
+                        </div>
+                    )}
                     <Dialog>
-                        <form>
-                            <DialogTrigger asChild>
-                                <Button className="mb-4" variant="outline">Create New</Button>
-                            </DialogTrigger>
-                            <DialogContent className="sm:max-w-[425px]">
-                                <DialogHeader>
+                        <DialogTrigger asChild>
+                            <Button className="mb-4" variant="outline">Create New</Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[425px]">
+                            <form onSubmit={handleCreate}>
+                                <DialogHeader className="mb-6">
                                     <DialogTitle>Create New Listing</DialogTitle>
                                     <DialogDescription>
                                         Fill in the details below to create a new listing.
                                     </DialogDescription>
                                 </DialogHeader>
 
-                                <div className="max-h-[70vh] overflow-y-auto pr-2 space-y-4">
-                                    <div className="grid gap-4">
-                                        <div className="grid gap-2">
-                                            <Label htmlFor="player">GrowID</Label>
-                                            <Input id="player" placeholder="Enter your GrowID" />
-                                        </div>
+                                <div className="max-h-[50vh] overflow-y-auto pr-2 space-y-4">
+                                    <div className="flex flex-col gap-4">
                                         <div className="grid gap-2">
                                             <Label htmlFor="world">World</Label>
-                                            <Input id="world" placeholder="Enter the world containing your item" />
+                                            <Input id="world" maxLength={24} onChange={(e) => setWorld(e.target.value)} placeholder="Enter world name" />
                                         </div>
                                         <div className="grid gap-2">
                                             <Label htmlFor="name">Item Name</Label>
-                                            <Input id="name" placeholder="Enter item name" />
+                                            <ItemNameAutocomplete
+                                            value={name}
+                                            onChange={(name, item) => {
+                                                setName(name);
+                                                if (item) {
+                                                    setImageUrl(item.imageUrl);
+                                                    setCategory(item.category);
+                                                    setSubcategory(item.subcategory);
+                                                } else {
+                                                    setImageUrl("https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/2912/y-offset/224/window-width/32/window-height/32?format=png&fill=cb-20250605082111");
+                                                    setCategory("");
+                                                    setSubcategory("");
+                                                }
+                                            }}
+                                            />
                                         </div>
-                                        <div className="grid gap-2">
-                                            <Label htmlFor="quantity">Quantity</Label>
-                                            <Input id="quantity" placeholder="Enter item quantity (how many items?)" />
+                                        <div className="flex flex-row gap-2">
+                                            <div className="grid gap-2">
+                                                <Label htmlFor="quantity">Quantity</Label>
+                                                <Input id="quantity" type="number" min={1} max={200} onChange={(e) => {
+                                                    const value = Number(e.target.value);
+                                                    if (value <= 200) {
+                                                        setQuantity(value);
+                                                    }
+                                                }} placeholder="Number of items" />
+                                            </div>
+                                            <div className="grid gap-2">
+                                                <Label htmlFor="price">Price</Label>
+                                                <Input id="price" type="number" onChange={(e) => setPrice(e.target.value)} placeholder="Enter price" />
+                                            </div>
+                                            <div className="grid gap-2">
+                                                <Label htmlFor="unit">Unit</Label>
+                                                <Select onValueChange={(val) => setUnit(val)}>
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder="Unit" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectItem value="WL">World Lock</SelectItem>
+                                                        <SelectItem value="DL">Diamond Lock</SelectItem>
+                                                        <SelectItem value="BGL">Blue Gem Lock</SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
                                         </div>
-                                        <div className="grid gap-2">
-                                            <Label htmlFor="price">Price</Label>
-                                            <Input id="price" placeholder="Enter price" />
-                                        </div>
-                                        <div className="grid gap-2">
-                                            <Label htmlFor="unit">Unit</Label>
-                                            <Select>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Unit" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectItem value="WL">World Lock</SelectItem>
-                                                    <SelectItem value="DL">Diamond Lock</SelectItem>
-                                                    <SelectItem value="BGL">Blue Gem Lock</SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                        </div>
+
                                         <Separator />
-                                        <div className="grid gap-2">
+                                        <div className="grid gap-2 mb-4">
                                             <Label>Preview</Label>
                                             <div className="w-full max-w-[200px] mx-auto">
-                                                <ProductCard_03
+                                                <ProductCard_03Preview
                                                     item={{
                                                         name,
-                                                        player,
                                                         quantity: Number(quantity),
                                                         price: Number(price),
                                                         unit,
+                                                        unitPrice: Number(unitPrice),
                                                         world,
-                                                        imageUrl: "https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest?cb=20230519125831",
+                                                        imageUrl: imageUrl,
+                                                        createdAt: new Date(),
+                                                        category: category,
+                                                        subcategory: subcategory
                                                     }}
                                                 />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </DialogContent>
-                        </form>
+
+                                <DialogFooter className="mt-6">
+                                    <DialogClose asChild>
+                                        <Button variant="outline">Cancel</Button>
+                                    </DialogClose>
+                                    <DialogClose asChild>
+                                        <Button type="submit">Create</Button>
+                                    </DialogClose>
+                                </DialogFooter>
+                            </form>
+                        </DialogContent>
                     </Dialog>
-
-
                 </div>
-
-
             </div>
         </div>
     )

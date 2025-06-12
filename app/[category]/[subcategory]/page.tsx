@@ -2,39 +2,25 @@
 
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 import ProductCard_03 from "@/components/commerce-ui/product-card-03";
 import { Navbar } from "@/components/navbar";
 
-import ItemsRaw from "@/data/items.json";
-import ListedItemsRaw from "@/data/listed-items.json";
-
-type Item = {
+export type ListedItem = {
+  userId: string;
   name: string;
-  imageUrl: string;
-};
-
-type ListedItem = {
-  name: string;
-  player: string;
   unit: string;
   price: number;
   quantity: number;
+  unitPrice: number;
   world: string;
   imageUrl: string;
-};
-
-type Items = {
-  [category: string]: {
-    [subcategory: string]: Item[];
-  };
-};
-
-type ListedItems = {
-  [category: string]: {
-    [subcategory: string]: ListedItem[];
-  };
+  createdAt: Date;
+  category: string;
+  subcategory: string;
 };
 
 interface Props {
@@ -44,7 +30,10 @@ interface Props {
 export default function SubcategoryPage({ params }: Props) {
   const { user, loading } = useAuth();
   const router = useRouter();
-  console.log(user?.displayName);
+
+  const { category, subcategory } = params;
+  const [listedItems, setListedItems] = useState<ListedItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -52,23 +41,34 @@ export default function SubcategoryPage({ params }: Props) {
     }
   }, [loading, user, router]);
 
-  if (loading || !user) {
+  useEffect(() => {
+    const fetchListings = async () => {
+      try {
+        const q = query(
+          collection(db, "AllListings"),
+          where("category", "==", category),
+          where("subcategory", "==", subcategory)
+        );
+        const snapshot = await getDocs(q);
+        const listings: ListedItem[] = snapshot.docs.map(doc => ({
+          ...doc.data(),
+          createdAt: doc.data().createdAt?.toDate?.() || new Date(), 
+        })) as ListedItem[];
+
+        setListedItems(listings);
+      } catch (error) {
+        console.error("Failed to fetch listings:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchListings();
+  }, [category, subcategory]);
+
+  if (loading || !user || isLoading) {
     return <div>Loading...</div>;
   }
-
-  const { category, subcategory } = params;
-  const Items = ItemsRaw as Items;
-  const ListedItems = ListedItemsRaw as ListedItems;
-
-  if (!(category in Items)) {
-    return <div>Category not found</div>;
-  }
-  const validSubcategories = Object.keys(Items[category]);
-  if (!validSubcategories.includes(subcategory)) {
-    return <div>Subcategory not found</div>;
-  }
-
-  const listedItems = ListedItems[category]?.[subcategory] || [];
 
   return (
     <div>
@@ -78,11 +78,16 @@ export default function SubcategoryPage({ params }: Props) {
           {category.charAt(0).toUpperCase() + category.slice(1)} &gt;{" "}
           {subcategory.charAt(0).toUpperCase() + subcategory.slice(1)}
         </h2>
-        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-          {listedItems.map((listedItem, index) => (
-            <ProductCard_03 key={index} item={listedItem} />
-          ))}
-        </ul>
+
+        {listedItems.length === 0 ? (
+          <p>No listings found for this category and subcategory.</p>
+        ) : (
+          <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {listedItems.map((item, index) => (
+              <ProductCard_03 key={index} item={item} />
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );

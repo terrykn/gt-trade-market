@@ -13,7 +13,6 @@ import {
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu"
 
-import { Input } from "@/components/ui/input"
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { DarkModeToggle } from "./darkmode-toggle";
@@ -23,6 +22,7 @@ import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { DarkModeToggleText } from "./darkmode-toggle-text";
+import { SearchBar } from "./search-bar";
 
 const pages = pagesData;
 
@@ -87,8 +87,7 @@ export function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-2">
-          <Input placeholder="Search..." className="w-48" />
-          <Button>Search</Button>
+          <SearchBar />
 
           <NavigationMenu>
             <NavigationMenuList className="flex items-center">
@@ -147,8 +146,7 @@ export function Navbar() {
           </div>
           <DarkModeToggleText />
           <div className="flex flex-row gap-2">
-            <Input placeholder="Search..." />
-            <Button>Search</Button>
+            <SearchBar />
           </div>
           <div>
             <ul className="max-h-64 overflow-y-auto">

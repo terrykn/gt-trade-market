@@ -9,7 +9,7 @@ interface ProductCard_03Props {
   item?: ListedItem;
 }
 
-function ProductCard_03({
+function ProductCard_03Preview({
   item
 }: ProductCard_03Props = {}) {
   return (
@@ -49,18 +49,10 @@ function ProductCard_03({
             </p>
           </div>
         </div>
-        <div className="flex flex-col gap-2">
-          <Button
-            onClick={() => alert("Save!")}
-            className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white transition-all hover:from-purple-700 hover:to-blue-700"
-          >
-            Save
-          </Button>
-        </div>
       </div>
     </div>
   );
 }
 
-export default ProductCard_03;
+export default ProductCard_03Preview;
 export type { ProductCard_03Props };

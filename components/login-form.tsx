@@ -38,7 +38,6 @@ export function LoginForm({
           displayName: user.displayName,
           photoURL: user.photoURL,
           createdAt: new Date().toISOString(),
-          listings: []
         });
       }
 
