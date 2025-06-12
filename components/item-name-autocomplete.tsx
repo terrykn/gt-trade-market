@@ -21,8 +21,8 @@ const allItems = Object.entries(itemsData).flatMap(([category, blocks]: [string,
   blocks.flatMap((block: any) =>
     block.items.map((item: any) => ({
       ...item,
-      category, // e.g. "Blocks"
-      subcategory: block.name, // e.g. "Earth Blocks"
+      category: category.toLowerCase().replace(/\s+/g, "-"),
+      subcategory: block.name.toLowerCase().replace(/\s+/g, "-"),
     }))
   )
 );

@@ -8,6 +8,7 @@ import { db } from "@/lib/firebase";
 
 import ProductCard_03 from "@/components/commerce-ui/product-card-03";
 import { Navbar } from "@/components/navbar";
+import { Timestamp } from "firebase/firestore";
 
 export type ListedItem = {
   userId: string;
@@ -18,7 +19,7 @@ export type ListedItem = {
   unitPrice: number;
   world: string;
   imageUrl: string;
-  createdAt: Date;
+  createdAt: Timestamp | Date | null;
   category: string;
   subcategory: string;
 };
@@ -49,6 +50,7 @@ export default function SubcategoryPage({ params }: Props) {
           where("category", "==", category),
           where("subcategory", "==", subcategory)
         );
+
         const snapshot = await getDocs(q);
         const listings: ListedItem[] = snapshot.docs.map(doc => ({
           ...doc.data(),
@@ -82,7 +84,7 @@ export default function SubcategoryPage({ params }: Props) {
         {listedItems.length === 0 ? (
           <p>No listings found for this category and subcategory.</p>
         ) : (
-          <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          <ul className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-4">
             {listedItems.map((item, index) => (
               <ProductCard_03 key={index} item={item} />
             ))}

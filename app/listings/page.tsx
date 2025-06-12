@@ -34,7 +34,7 @@ import { Items } from "../[category]/[subcategory]/page";
 import { ListedItems } from "../[category]/[subcategory]/page";
 
 import { db } from "@/lib/firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import { useAuth } from "@/context/auth-context";
 
 import { useRouter } from "next/navigation";
@@ -66,6 +66,9 @@ export default function ListingsPage() {
     const [category, setCategory] = useState("");
     const [subcategory, setSubcategory] = useState("");
 
+    const [listedItems, setListedItems] = useState<ListedItem[]>([]);
+
+    const [dialogOpen, setDialogOpen] = useState(false);
 
     const [alert, setAlert] = useState<{
         type: "success" | "error";
@@ -132,6 +135,8 @@ export default function ListingsPage() {
                 title: "Listing created!",
                 description: "Your new listing was added successfully.",
             });
+            fetchUserListings();
+            setDialogOpen(false);
         } catch (err) {
             console.error("Error creating listing:", err);
             setAlert({
@@ -142,12 +147,38 @@ export default function ListingsPage() {
         }
     };
 
+        const fetchUserListings = async () => {
+        if (!user) return;
+
+        try {
+            const q = query(collection(db, "users", user.uid, "listings"));
+            const snapshot = await getDocs(q);
+            const listings: ListedItem[] = snapshot.docs.map(doc => ({
+                ...doc.data(),
+                createdAt: doc.data().createdAt?.toDate?.() || new Date(),
+            })) as ListedItem[];
+
+            setListedItems(listings);
+        } catch (err) {
+            console.error("Failed to fetch user listings:", err);
+            setAlert({
+                type: "error",
+                title: "Error loading listings",
+                description: "Please try again later.",
+            });
+        }
+    };
+
+    useEffect(() => {
+        fetchUserListings();
+    }, [user]);
+
     return (
         <div>
             <Navbar />
-            <div className="p-6">
+            <div className="flex flex-col p-6">
                 <div className="flex flex-row items-center gap-4">
-                    <h2 className="text-xl font-bold mb-4">My Listings</h2>
+                    <h2 className="text-xl font-bold mb-6">My Listings</h2>
                     {alert && (
                         <div
                             style={{
@@ -174,9 +205,9 @@ export default function ListingsPage() {
                             </Alert>
                         </div>
                     )}
-                    <Dialog>
+                    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                         <DialogTrigger asChild>
-                            <Button className="mb-4" variant="outline">Create New</Button>
+                            <Button className="mb-6" variant="outline">Create New</Button>
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-[425px]">
                             <form onSubmit={handleCreate}>
@@ -191,7 +222,7 @@ export default function ListingsPage() {
                                     <div className="flex flex-col gap-4">
                                         <div className="grid gap-2">
                                             <Label htmlFor="world">World</Label>
-                                            <Input id="world" maxLength={24} onChange={(e) => setWorld(e.target.value)} placeholder="Enter world name" />
+                                            <Input required id="world" maxLength={24} onChange={(e) => setWorld(e.target.value.toUpperCase())} placeholder="Enter world name" />
                                         </div>
                                         <div className="grid gap-2">
                                             <Label htmlFor="name">Item Name</Label>
@@ -201,8 +232,8 @@ export default function ListingsPage() {
                                                 setName(name);
                                                 if (item) {
                                                     setImageUrl(item.imageUrl);
-                                                    setCategory(item.category);
-                                                    setSubcategory(item.subcategory);
+                                                    setCategory(item.category.toLowerCase().replace(/\s+/g, "-"),);
+                                                    setSubcategory(item.subcategory.toLowerCase().replace(/\s+/g, "-"),);
                                                 } else {
                                                     setImageUrl("https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/2912/y-offset/224/window-width/32/window-height/32?format=png&fill=cb-20250605082111");
                                                     setCategory("");
@@ -212,18 +243,13 @@ export default function ListingsPage() {
                                             />
                                         </div>
                                         <div className="flex flex-row gap-2">
-                                            <div className="grid gap-2">
+                                            <div className="grid gap-2 w-full">
                                                 <Label htmlFor="quantity">Quantity</Label>
-                                                <Input id="quantity" type="number" min={1} max={200} onChange={(e) => {
-                                                    const value = Number(e.target.value);
-                                                    if (value <= 200) {
-                                                        setQuantity(value);
-                                                    }
-                                                }} placeholder="Number of items" />
+                                                <Input min={1} max={200} required id="quantity" type="number" onChange={(e) => setQuantity(e.target.value)} placeholder="Number of items" />
                                             </div>
-                                            <div className="grid gap-2">
+                                            <div className="grid gap-2 w-full">
                                                 <Label htmlFor="price">Price</Label>
-                                                <Input id="price" type="number" onChange={(e) => setPrice(e.target.value)} placeholder="Enter price" />
+                                                <Input min={1} max={200} required id="price" type="number"  onChange={(e) => setPrice(e.target.value)} placeholder="Enter price" />
                                             </div>
                                             <div className="grid gap-2">
                                                 <Label htmlFor="unit">Unit</Label>
@@ -267,14 +293,22 @@ export default function ListingsPage() {
                                     <DialogClose asChild>
                                         <Button variant="outline">Cancel</Button>
                                     </DialogClose>
-                                    <DialogClose asChild>
-                                        <Button type="submit">Create</Button>
-                                    </DialogClose>
+                                    <Button type="submit">Create</Button>
                                 </DialogFooter>
                             </form>
                         </DialogContent>
                     </Dialog>
                 </div>
+
+                {listedItems.length === 0 ? (
+                    <p className="text-muted-foreground">You have no listings yet.</p>
+                ) : (
+                    <ul className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-4">
+                        {listedItems.map((item, index) => (
+                            <ProductCard_03 key={index} item={item} />
+                        ))}
+                    </ul>
+                )}
             </div>
         </div>
     )
