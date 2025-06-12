@@ -68,13 +68,16 @@ function ProductCard_03Preview({
           <h3 className="text-md font-semibold tracking-tight text-gray-900 dark:text-gray-100">
             {item?.name}
           </h3>
-          <div>
-            {item?.quantity} for {item?.price} {item?.unit}
-          </div>
-          <div>
-            <p className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400">
-              World: {item?.world}
-            </p>
+          <div className="flex flex-col">
+            <div>
+              {item?.quantity} for {item?.price} {item?.unit}
+            </div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              Unit Price: {item?.unitPrice} WL
+            </div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+                World: {item?.world}
+            </div>            
           </div>
         </div>
       </div>

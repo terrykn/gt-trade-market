@@ -1,5 +1,4 @@
 
-* Make fields required in the create listings form
 * Implement unit price for each listed item
 
 * Implement world listings

@@ -147,7 +147,7 @@ export default function ListingsPage() {
         }
     };
 
-        const fetchUserListings = async () => {
+    const fetchUserListings = async () => {
         if (!user) return;
 
         try {
@@ -172,6 +172,21 @@ export default function ListingsPage() {
     useEffect(() => {
         fetchUserListings();
     }, [user]);
+
+    useEffect(() => {
+        if (!quantity || !price || !unit) {
+            setUnitPrice("");
+            return;
+        }
+        let priceInWL = Number(price);
+        if (unit === "DL") priceInWL = Number(price) * 100;
+        if (unit === "BGL") priceInWL = Number(price) * 100 * 100;
+        if (Number(quantity) > 0) {
+            setUnitPrice((priceInWL / Number(quantity)).toString());
+        } else {
+            setUnitPrice("");
+        }
+    }, [quantity, price, unit]);
 
     return (
         <div>
@@ -227,29 +242,29 @@ export default function ListingsPage() {
                                         <div className="grid gap-2">
                                             <Label htmlFor="name">Item Name</Label>
                                             <ItemNameAutocomplete
-                                            value={name}
-                                            onChange={(name, item) => {
-                                                setName(name);
-                                                if (item) {
-                                                    setImageUrl(item.imageUrl);
-                                                    setCategory(item.category.toLowerCase().replace(/\s+/g, "-"),);
-                                                    setSubcategory(item.subcategory.toLowerCase().replace(/\s+/g, "-"),);
-                                                } else {
-                                                    setImageUrl("https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/2912/y-offset/224/window-width/32/window-height/32?format=png&fill=cb-20250605082111");
-                                                    setCategory("");
-                                                    setSubcategory("");
-                                                }
-                                            }}
+                                                value={name}
+                                                onChange={(name, item) => {
+                                                    setName(name);
+                                                    if (item) {
+                                                        setImageUrl(item.imageUrl);
+                                                        setCategory(item.category.toLowerCase().replace(/\s+/g, "-"),);
+                                                        setSubcategory(item.subcategory.toLowerCase().replace(/\s+/g, "-"),);
+                                                    } else {
+                                                        setImageUrl("https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/2912/y-offset/224/window-width/32/window-height/32?format=png&fill=cb-20250605082111");
+                                                        setCategory("");
+                                                        setSubcategory("");
+                                                    }
+                                                }}
                                             />
                                         </div>
                                         <div className="flex flex-row gap-2">
                                             <div className="grid gap-2 w-full">
                                                 <Label htmlFor="quantity">Quantity</Label>
-                                                <Input min={1} max={200} required id="quantity" type="number" onChange={(e) => setQuantity(e.target.value)} placeholder="Number of items" />
+                                                <Input min={1} max={200} required id="quantity" type="number" onChange={(e) => setQuantity(Number(e.target.value))} placeholder="Number of items" />
                                             </div>
                                             <div className="grid gap-2 w-full">
                                                 <Label htmlFor="price">Price</Label>
-                                                <Input min={1} max={200} required id="price" type="number"  onChange={(e) => setPrice(e.target.value)} placeholder="Enter price" />
+                                                <Input min={1} max={200} required id="price" type="number" onChange={(e) => setPrice(Number(e.target.value))} placeholder="Enter price" />
                                             </div>
                                             <div className="grid gap-2">
                                                 <Label htmlFor="unit">Unit</Label>
