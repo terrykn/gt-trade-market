@@ -17,14 +17,17 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { DarkModeToggle } from "./darkmode-toggle";
 import pagesData from '@/data/pages.json';
+import worldPagesData from '@/data/world_pages.json';
 
 import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { DarkModeToggleText } from "./darkmode-toggle-text";
 import { SearchBar } from "./search-bar";
+import { Separator } from "./ui/separator";
 
 const pages = pagesData;
+const worldPages = worldPagesData;
 
 type Subcategory = {
   title: string
@@ -92,6 +95,15 @@ export function Navbar() {
           <NavigationMenu>
             <NavigationMenuList className="flex items-center">
               <NavigationMenuItem>
+                <div className="text-sm font-medium">
+                  <Link
+                    href='/featured'
+                  >
+                    Featured
+                  </Link>
+                </div>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
                 <NavigationMenuTrigger>All Items</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[200px] gap-2 max-h-64 overflow-y-auto">
@@ -105,6 +117,26 @@ export function Navbar() {
                         />
                       ))}
                     </li>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>All Worlds</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[200px] max-h-64 overflow-y-auto">
+                    {worldPages.map((page) => (
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <div>
+                            <div className="py-1 text-sm leading-none font-medium rounded-md hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1">
+                              <Link href={page.href}>
+                                {page.title}
+                              </Link>
+                            </div>
+                          </div>
+                        </NavigationMenuLink>
+                      </li>
+                    ))}
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -148,13 +180,21 @@ export function Navbar() {
           <div className="flex flex-row gap-2">
             <SearchBar />
           </div>
+          <div className="text-sm font-medium">
+            <Link
+              href='/featured'
+            >
+              Featured
+            </Link>
+          </div>
+          <Separator className="mt-2 mb-2" />
           <div>
-            <ul className="max-h-64 overflow-y-auto">
+            <ul className="max-h-32 overflow-y-auto">
               {pages.map((page) => (
                 <div key={page.title}>
-                  <div className="text-sm leading-none font-medium">{page.title}</div>
+                  <div className="text-sm leading-none font-medium mb-4">{page.title}</div>
                   {page.subcategories && page.subcategories.length > 0 && (
-                    <ul className="mt-2 mb-2 space-y-1">
+                    <ul className="mt-4 mb-4 space-y-1">
                       {page.subcategories.map((subcategory) => (
                         <li key={subcategory.title}>
                           <Link
@@ -168,6 +208,20 @@ export function Navbar() {
                     </ul>
                   )}
                 </div>
+              ))}
+            </ul>
+          </div>
+          <Separator className="mt-2 mb-2" />
+          <div>
+            <ul className="max-h-32 overflow-y-auto">
+              {worldPages.map((page) => (
+                <li>
+                  <div className="mb-2">
+                    <Link href={page.href} className="w-full py-1 text-sm leading-none font-medium rounded-md hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1">
+                      {page.title}
+                    </Link>
+                  </div>
+                </li>
               ))}
             </ul>
           </div>

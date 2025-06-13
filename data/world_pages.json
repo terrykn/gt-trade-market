@@ -1,0 +1,17 @@
+[
+  { "title": "All Worlds", "href": "/worlds" },
+  { "title": "Trade", "href": "/worlds/trade" },
+  { "title": "Main", "href": "/worlds/main" },
+  { "title": "Shop", "href": "/worlds/shop" },
+  { "title": "Farm", "href": "/worlds/farm" },
+  { "title": "Music", "href": "/worlds/music" },
+  { "title": "Social", "href": "/worlds/social" },
+  { "title": "Storage", "href": "/worlds/storage" },
+  { "title": "Art", "href": "/worlds/art" },
+  { "title": "Game", "href": "/worlds/game" },
+  { "title": "Information", "href": "/worlds/information" },
+  { "title": "Parkour", "href": "/worlds/parkour" },
+  { "title": "Puzzle", "href": "/worlds/puzzle" },
+  { "title": "Roleplay", "href": "/worlds/roleplay" },
+  { "title": "Story", "href": "/worlds/story" }
+]

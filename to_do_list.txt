@@ -1,7 +1,4 @@
 
-* Implement unit price for each listed item
-
-* Implement world listings
 * Implement default featured main page with all listings, worlds, and other cool stuff
 
 * Implement sorting once searched OR inside a subcategory
