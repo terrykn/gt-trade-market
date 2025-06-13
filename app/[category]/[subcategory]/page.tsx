@@ -9,6 +9,7 @@ import { db } from "@/lib/firebase";
 import ProductCard_03 from "@/components/commerce-ui/product-card-03";
 import { Navbar } from "@/components/navbar";
 import { Timestamp } from "firebase/firestore";
+import CreateListing from "@/components/create-listing";
 
 export type ListedItem = {
   id: string;
@@ -81,6 +82,7 @@ export default function SubcategoryPage({ params }: Props) {
           {category.charAt(0).toUpperCase() + category.slice(1)} &gt;{" "}
           {subcategory.charAt(0).toUpperCase() + subcategory.slice(1)}
         </h2>
+        <CreateListing />
 
         {listedItems.length === 0 ? (
           <p>No listings found for this category and subcategory.</p>

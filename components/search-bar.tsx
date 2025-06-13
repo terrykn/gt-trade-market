@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import itemsData from "@/data/items_sample.json";
+import missingItemsData from "@/data/missing_items.json";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,6 +19,18 @@ const allItems = Object.entries(itemsData).flatMap(([category, blocks]: [string,
   )
 );
 
+const defaultImageUrl =
+  "https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/2912/y-offset/224/window-width/32/window-height/32?format=png&fill=cb-20250605082111";
+
+const missingItems = missingItemsData.map((item: any) => ({
+  ...item,
+  imageUrl: defaultImageUrl,
+  category: "other-category",
+  subcategory: "other-subcategory",
+}));
+
+const combinedItems = [...allItems, ...missingItems];
+
 export function SearchBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<any[]>([]);
@@ -31,7 +44,7 @@ export function SearchBar() {
       return;
     }
 
-    const filtered = allItems
+    const filtered = combinedItems
       .filter((item) =>
         item.name.toLowerCase().includes(query.toLowerCase())
       )
@@ -51,7 +64,7 @@ export function SearchBar() {
         <Input
           ref={inputRef}
           value={query}
-          placeholder="Search items..."
+          placeholder="Search any item..."
           className="w-full"
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setFocused(true)}
@@ -77,7 +90,7 @@ export function SearchBar() {
                 <div>
                   <div>{item.name}</div>
                   <div className="text-xs text-gray-500 dark:text-gray-400">
-                    {item.category} &mdash; {item.subcategory}
+                    {item.category.replace(/-/g, " ")} &mdash; {item.subcategory.replace(/-/g, " ")}
                   </div>
                 </div>
               </Link>

@@ -123,17 +123,16 @@ export function Navbar() {
               <NavigationMenuItem>
                 <NavigationMenuTrigger>All Worlds</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-[200px] max-h-64 overflow-y-auto">
+                  <ul className="grid w-[200px] max-h-64 overflow-y-auto gap-y-1 pr-2">
                     {worldPages.map((page) => (
-                      <li>
+                      <li key={page.href}>
                         <NavigationMenuLink asChild>
-                          <div>
-                            <div className="py-1 text-sm leading-none font-medium rounded-md hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1">
-                              <Link href={page.href}>
-                                {page.title}
-                              </Link>
-                            </div>
-                          </div>
+                          <Link
+                            href={page.href}
+                            className="group flex w-full items-start justify-start rounded-md py-1 text-sm font-medium hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1"
+                          >
+                            {page.title}
+                          </Link>
                         </NavigationMenuLink>
                       </li>
                     ))}

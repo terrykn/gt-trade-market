@@ -122,6 +122,10 @@ export default function ListingsPage() {
     }, [user]);
 
     useEffect(() => {
+        if (user) fetchWorldListings();
+    }, [user]);
+
+    useEffect(() => {
         if (!quantity || !price || !unit) {
             setUnitPrice("");
             return;
@@ -411,10 +415,6 @@ export default function ListingsPage() {
                                         <div className="max-h-[50vh] overflow-y-auto pr-2 space-y-4">
                                             <div className="flex flex-col gap-4">
                                                 <div className="grid gap-2">
-                                                    <Label htmlFor="world">World</Label>
-                                                    <Input required id="world" maxLength={24} onChange={(e) => setWorld(e.target.value.toUpperCase())} placeholder="Enter world selling your item" />
-                                                </div>
-                                                <div className="grid gap-2">
                                                     <Label htmlFor="name">Item Name</Label>
                                                     <ItemNameAutocomplete
                                                         value={name}
@@ -454,6 +454,10 @@ export default function ListingsPage() {
                                                             </SelectContent>
                                                         </Select>
                                                     </div>
+                                                </div>
+                                                <div className="grid gap-2">
+                                                    <Label htmlFor="world">World</Label>
+                                                    <Input required id="world" maxLength={24} onChange={(e) => setWorld(e.target.value.toUpperCase())} placeholder="Enter world selling your item" />
                                                 </div>
 
                                                 <Separator />

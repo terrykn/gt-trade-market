@@ -1,5 +1,5 @@
 [
-  { "title": "All Worlds", "href": "/worlds" },
+  { "title": "All Worlds", "href": "/worlds/all" },
   { "title": "Trade", "href": "/worlds/trade" },
   { "title": "Main", "href": "/worlds/main" },
   { "title": "Shop", "href": "/worlds/shop" },
