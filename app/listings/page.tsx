@@ -227,7 +227,7 @@ export default function ListingsPage() {
         const newWorldListing = {
             userId: user.uid,
             name: worldForSale,
-            price: Number(price),
+            price: Number(worldPrice),
             unit: worldUnit,
             category: worldCategory,
             description: worldDescription,
@@ -526,7 +526,7 @@ export default function ListingsPage() {
                                                 <div className="flex flex-row gap-2">
                                                     <div className="grid gap-2 w-full">
                                                         <Label htmlFor="worldPrice">Price</Label>
-                                                        <Input min={1} max={9000} required id="price" type="number" onChange={(e) => setWorldPrice(Number(e.target.value))} placeholder="Enter price" />
+                                                        <Input min={1} max={200} required id="price" type="number" onChange={(e) => setWorldPrice(Number(e.target.value))} placeholder="Enter price" />
                                                     </div>
                                                     <div className="grid gap-2">
                                                         <Label htmlFor="worldUnit">Unit</Label>
