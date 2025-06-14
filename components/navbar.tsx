@@ -26,6 +26,8 @@ import { DarkModeToggleText } from "./darkmode-toggle-text";
 import { SearchBar } from "./search-bar";
 import { Separator } from "./ui/separator";
 
+import { ComboBox } from "./combobox";
+
 const pages = pagesData;
 const worldPages = worldPagesData;
 
@@ -41,27 +43,33 @@ type ListItemProps = React.ComponentPropsWithoutRef<"li"> & {
 }
 
 function ListItem({ title, href, subcategories }: ListItemProps) {
+  const router = useRouter();
+
+  // If no subcategories, fall back to simple link
+  if (!subcategories || subcategories.length === 0) {
+    return (
+      <NavigationMenuLink asChild>
+        <Link href={href} className="text-sm font-medium">
+          {title}
+        </Link>
+      </NavigationMenuLink>
+    );
+  }
+
+  // Use ComboBox with subcategory titles
   return (
-    <NavigationMenuLink asChild>
-      <div>
-        <div className="text-sm leading-none font-medium">{title}</div>
-        {subcategories && subcategories.length > 0 && (
-          <ul className="mt-2 space-y-1">
-            {subcategories.map((subcategory) => (
-              <li key={subcategory.title}>
-                <Link
-                  href={subcategory.href}
-                  className="group inline-flex w-full items-center justify-start rounded-md px-2 py-1 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1"
-                >
-                  {subcategory.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </NavigationMenuLink>
-  )
+    <div className="px-2 py-1">
+      <ComboBox
+        label={title}
+        options={subcategories.map((s) => s.title)}
+        // extend ComboBox if you want router push:
+        onSelect={(selectedTitle) => {
+          const found = subcategories.find((s) => s.title === selectedTitle);
+          if (found) router.push(found.href);
+        }}
+      />
+    </div>
+  );
 }
 
 export function Navbar() {
@@ -79,6 +87,10 @@ export function Navbar() {
       <div className="flex items-center justify-between">
         <div className="text-xl font-bold p-6">Growtopia Trade Market</div>
 
+        <div className="lg:hidden">
+          <SearchBar />
+        </div>
+
         {/* Mobile Menu Button */}
         <button
           className="lg:hidden p-4"
@@ -94,15 +106,6 @@ export function Navbar() {
 
           <NavigationMenu>
             <NavigationMenuList className="flex items-center">
-              <NavigationMenuItem>
-                <div className="text-sm font-medium">
-                  <Link
-                    href='/featured'
-                  >
-                    Featured
-                  </Link>
-                </div>
-              </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuTrigger>All Items</NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -176,9 +179,6 @@ export function Navbar() {
             </button>
           </div>
           <DarkModeToggleText />
-          <div className="flex flex-row gap-2">
-            <SearchBar />
-          </div>
           <div className="text-sm font-medium">
             <Link
               href='/featured'
