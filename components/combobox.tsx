@@ -47,7 +47,7 @@ export function ComboBox({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
-        <Command>
+        <Command className="max-h-[50vh]">
           <CommandInput placeholder={`Search ${label}...`} className="h-9" />
           <CommandList>
             <CommandEmpty>No {label.toLowerCase()} found.</CommandEmpty>

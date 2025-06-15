@@ -45,7 +45,6 @@ type ListItemProps = React.ComponentPropsWithoutRef<"li"> & {
 function ListItem({ title, href, subcategories }: ListItemProps) {
   const router = useRouter();
 
-  // If no subcategories, fall back to simple link
   if (!subcategories || subcategories.length === 0) {
     return (
       <NavigationMenuLink asChild>
@@ -56,13 +55,11 @@ function ListItem({ title, href, subcategories }: ListItemProps) {
     );
   }
 
-  // Use ComboBox with subcategory titles
   return (
     <div className="px-2 py-1">
       <ComboBox
         label={title}
         options={subcategories.map((s) => s.title)}
-        // extend ComboBox if you want router push:
         onSelect={(selectedTitle) => {
           const found = subcategories.find((s) => s.title === selectedTitle);
           if (found) router.push(found.href);

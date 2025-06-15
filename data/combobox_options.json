@@ -1,0 +1,96 @@
+{
+  "surgery": [
+    { "title": "Surgery Tools", "href": "" },
+    { "title": "Malady", "href": "" },
+    { "title": "Surgery Items", "href": "" }
+  ],
+  "startopia": [
+    { "title": "Startopia Tools", "href": "" },
+    { "title": "Startrek Startopia Items", "href": "" },
+    { "title": "Starship Blasts", "href": "" },
+    { "title": "Sector Ships", "href": "" }
+  ],
+  "cooking": [
+    { "title": "Cooking Tools", "href": "" },
+    { "title": "Ingredients", "href": "" },
+    { "title": "Food", "href": "" }
+  ],
+  "fishing": [
+    { "title": "Fishing Rods", "href": "" },
+    { "title": "Bait", "href": "" },
+    { "title": "Fish", "href": "" },
+    { "title": "Lobsters", "href": "" },
+    { "title": "Fishing Items", "href": "" }
+  ],
+  "clothes": [
+    { "title": "Hats", "href": "" },
+    { "title": "Hair", "href": "" },
+    { "title": "Face", "href": "" },
+    { "title": "Neck", "href": "" },
+    { "title": "Shirts", "href": "" },
+    { "title": "Pants", "href": "" },
+    { "title": "Shoes", "href": "" },
+    { "title": "Back", "href": "" },
+    { "title": "Hands", "href": "" },
+    { "title": "Pet Battle", "href": "" },
+    { "title": "Pets", "href": "" },
+    { "title": "Rides", "href": "" }
+  ],
+  "building": [
+    { "title": "Foreground Blocks", "href": "/blocks/foreground-blocks" },
+    { "title": "Background Blocks", "href": "/blocks/background-blocks" },
+    { "title": "Non-solid Blocks", "href": "/blocks/non-solid-blocks" },
+    { "title": "Doors", "href": "/blocks/doors" },
+    { "title": "Locks", "href": "/blocks/locks" },
+    { "title": "Seats", "href": "/blocks/seats" },
+    { "title": "Treasure Blocks", "href": "/blocks/treasure-blocks" },
+    { "title": "Deadly Blocks", "href": "/blocks/deadly-blocks" },
+    { "title": "Trampoline Blocks", "href": "/blocks/trampoline-blocks" },
+    { "title": "Consumables", "href": "/blocks/consumables" },
+    { "title": "Entrances", "href": "/blocks/entrances" },
+    { "title": "Signs", "href": "/blocks/signs" },
+    { "title": "Platforms", "href": "/blocks/platforms" },
+    { "title": "Pain Blocks (Lava)", "href": "/blocks/pain-blocks-(lava)" },
+    { "title": "Pain Blocks (Acid)", "href": "/blocks/pain-blocks-(acid)" },
+    { "title": "Bouncy Blocks", "href": "/blocks/bouncy-blocks" },
+    { "title": "Pain Blocks (Spike)", "href": "/blocks/pain-blocks-(spike)" },
+    { "title": "Portals", "href": "/blocks/portals" },
+    { "title": "Checkpoints", "href": "/blocks/checkpoints" },
+    { "title": "Sheet Music", "href": "/blocks/sheet-music" },
+    { "title": "Slippery Blocks", "href": "/blocks/slippery-blocks" },
+    { "title": "Toggleable Blocks", "href": "/blocks/toggleable-blocks" },
+    { "title": "Chests", "href": "/blocks/chests" },
+    { "title": "Mailboxes", "href": "/blocks/mailboxes" },
+    { "title": "Bulletin Boards", "href": "/blocks/bulletin-boards" },
+    { "title": "Event Mystery Blocks", "href": "/blocks/event-mystery-blocks" },
+    { "title": "Random Blocks", "href": "/blocks/random-blocks" },
+    { "title": "Components", "href": "/blocks/components" },
+    { "title": "Providers", "href": "/blocks/providers" },
+    { "title": "Chemical Combiners", "href": "/blocks/chemical-combiners" },
+    { "title": "Weather Machines", "href": "/blocks/weather-machines" },
+    { "title": "Donation Boxes", "href": "/blocks/donation-boxes" },
+    { "title": "Mannequins", "href": "/blocks/mannequins" },
+    { "title": "Security Cameras", "href": "/blocks/security-cameras" },
+    { "title": "Game Blocks", "href": "/blocks/game-blocks" },
+    { "title": "Crystals", "href": "/blocks/crystals" },
+    { "title": "Pushing Blocks", "href": "/blocks/pushing-blocks" },
+    { "title": "Fishes", "href": "/blocks/fishes" },
+    { "title": "Cooking Ovens", "href": "/blocks/cooking-ovens" },
+    { "title": "Autobreaking Blocks", "href": "/blocks/autobreaking-blocks" },
+    {
+      "title": "Toggleable Multi-Framed Animated Foreground Blocks",
+      "href": "/blocks/toggleable-multi-framed-animated-foreground-blocks"
+    }
+  ],
+  "farming": [
+    { "title": "Farming Tools", "href": "" },
+    { "title": "Farmables", "href": "" },
+    { "title": "Seeds", "href": "" },
+    { "title": "Bountiful", "href": "" },
+    { "title": "Role Drops", "href": "" },
+    { "title": "Farm Worlds", "href": "" }
+  ],
+  "other": [
+    { "title": "Uncategorized", "href": "" }
+  ]
+}

@@ -10,11 +10,15 @@ import { Navbar } from "@/components/navbar";
 import { ListedItem } from "./[category]/[subcategory]/page";
 import { ListedWorld } from "./listings/page";
 import { FeaturedPreview } from "@/components/featured-preview";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { ComboBox } from "@/components/combobox";
 import Image from "next/image";
 import Link from "next/link";
-import { FeaturedPreviewUnit } from "@/components/featured-preview-unit";
+import { Button } from "@/components/ui/button";
+import { FeaturedPreviewWorlds } from "@/components/featured-preview-worlds";
+import { FeaturedPreviewCombobox } from "@/components/featured-preview-combobox";
+import comboBoxOptions from "@/data/combobox_options.json";
+
 
 export default function FeaturedPage() {
   const { user, loading } = useAuth();
@@ -79,6 +83,11 @@ export default function FeaturedPage() {
     )
     .slice(0, 3);
 
+  const mostRecentWorlds = [...listedWorlds]
+    .sort((a, b) => (b.createdAt as Date).getTime() - (a.createdAt as Date).getTime())
+    .slice(0, 4);
+
+
   function getRandomElements<T>(array: T[], count: number): T[] {
     const shuffled = [...array].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
@@ -100,7 +109,24 @@ export default function FeaturedPage() {
     .sort((a, b) => (b.createdAt as Date).getTime() - (a.createdAt as Date).getTime())
     .slice(0, 20);
 
-  const lowUnitPriceItems = getRandomElements(lowestUnitPriceItemsSorted, 4);
+  const lowUnitPriceItems = getRandomElements(lowestUnitPriceItemsSorted, 3);
+
+  const renderComboBox = (categoryKey: keyof typeof comboBoxOptions) => {
+    const items = comboBoxOptions[categoryKey];
+    return (
+      <ComboBox
+        key={categoryKey}
+        label={categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1)}
+        options={items.map((item) => item.title)}
+        onSelect={(selectedTitle) => {
+          const selectedItem = items.find((item) => item.title === selectedTitle);
+          if (selectedItem?.href) {
+            router.push(selectedItem.href);
+          }
+        }}
+      />
+    );
+  };
 
   return (
     <div>
@@ -108,23 +134,29 @@ export default function FeaturedPage() {
       <div className="px-6 py-6">
         {/* Row 1 */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          <Card
-            onClick={() => router.push("/events/voucher-dayz")}
-            className="p-0 h-30 overflow-hidden rounded-lg hover:scale-102 transition-transform duration-300 ease-in-out cursor-pointer"
-          >
-            <CardContent className="relative w-full h-full p-0 overflow-hidden rounded-lg">
-              <Image
-                src="https://static.wikia.nocookie.net/growtopia/images/9/94/VD_NewsBanner.png/revision/latest/scale-to-width-down/500?cb=20250306225056"
-                alt="voucher dayz"
-                fill
-                className="object-cover"
-              />
+          <Card>
+            <CardContent className="flex flex-row h-full items-center justify-center gap-4">
+              <div className="relative">
+                {/* Glow Layer */}
+                <div className="absolute inset-0 z-0 animate-spin-slow pointer-events-none rounded-full bg-gradient-to-tr from-purple-400 via-pink-500 to-blue-500 blur-md opacity-60"></div>
+
+                {/* Image Layer */}
+                <Image
+                  className="relative z-10"
+                  width={48}
+                  height={48}
+                  src="https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/2368/y-offset/1408/window-width/32/window-height/32?format=png&fill=cb-20250612135320"
+                  alt="item name"
+                />
+              </div> 
+              <span className="font-semibold text-lg">Event: Voucher Dayz</span>
+              <Button variant="outline" className="text-xs">See more...</Button>
             </CardContent>
           </Card>
 
           <div className="relative">
             {/* Badge */}
-            <div className="absolute -top-2 -right-2 z-10">
+            <div className="absolute -top-2 -left-2 z-10">
               <span className="relative inline-block rounded-full bg-gradient-to-r from-purple-500 to-blue-700 px-3 py-1.5 text-xs font-semibold text-white">
                 NEW
                 <span className="absolute -top-1 -right-1 flex h-3 w-3">
@@ -142,7 +174,7 @@ export default function FeaturedPage() {
 
           <div className="relative">
             {/* Badge */}
-            <div className="absolute -top-2 -right-2 z-10">
+            <div className="absolute -top-2 -left-2 z-10">
               <span className="relative inline-block rounded-full bg-gradient-to-r from-purple-500 to-blue-700 px-3 py-1.5 text-xs font-semibold text-white">
                 LOW PRICE
                 <span className="absolute -top-1 -right-1 flex h-3 w-3">
@@ -153,7 +185,7 @@ export default function FeaturedPage() {
             </div>
             <Card onClick={() => router.push("/events/voucher-dayz")} className="p-2 h-30 overflow-hidden rounded-lg">
               <CardContent className="relative items-center flex h-full w-full p-0 overflow-hidden rounded-lg">
-                <FeaturedPreviewUnit items={lowUnitPriceItems} />
+                <FeaturedPreview items={lowUnitPriceItems} />
               </CardContent>
             </Card>
           </div>
@@ -161,41 +193,37 @@ export default function FeaturedPage() {
         </div>
 
         {/* Row 2 */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-4 md: grid-cols-2 gap-4">
 
           {/* Column 1: Worlds*/}
-          <Card className="aspect-square w-full">
-            <CardContent className="p-4 h-full">Worlds</CardContent>
+          <Card onClick={() => router.push("/events/voucher-dayz")} className="p-2 w-full h-auto overflow-hidden rounded-lg">
+            <CardContent className="relative items-center flex h-full w-full p-0 overflow-hidden rounded-lg">
+              <FeaturedPreviewWorlds worlds={mostRecentWorlds} />
+            </CardContent>
           </Card>
 
-          {/* Column 2: Special */}
-          <Card className="aspect-square w-full">
-            <CardContent className="p-4 h-full">Special</CardContent>
+          {/* Column 2: Special, Events */}
+          <Card className="p-4 w-full h-auto">
+            <FeaturedPreviewCombobox input="special" />
+            <FeaturedPreviewCombobox input="annual-events" />
+            <FeaturedPreviewCombobox input="monthly-events" />
           </Card>
 
+      {/* Column 3: Comboboxes 1 */}
+      <div className="flex flex-col gap-2">
+        {renderComboBox("surgery")}
+        {renderComboBox("startopia")}
+        {renderComboBox("cooking")}
+        {renderComboBox("fishing")}
+      </div>
 
-          {/* Column 3: Events */}
-          <div className="aspect-square w-full grid grid-rows-3 gap-4">
-            <Card><CardContent className="p-4">Annual Events</CardContent></Card>
-            <Card><CardContent className="p-4">Monthly Events</CardContent></Card>
-            <Card><CardContent className="p-4">Daily Events</CardContent></Card>
-          </div>
-
-          {/* Column 4: Comboboxes 1 */}
-          <div className="flex flex-col gap-2">
-            <ComboBox label="Surgery" />
-            <ComboBox label="Startopia" />
-            <ComboBox label="Cooking" />
-            <ComboBox label="Fishing" />
-          </div>
-
-          {/* Column 5: Comboboxes 2 */}
-          <div className="flex flex-col gap-2">
-            <ComboBox label="Clothes" />
-            <ComboBox label="Building" />
-            <ComboBox label="Farming" />
-            <ComboBox label="Other" />
-          </div>
+      {/* Column 4: Comboboxes 2 */}
+      <div className="flex flex-col gap-2">
+        {renderComboBox("clothes")}
+        {renderComboBox("building")}
+        {renderComboBox("farming")}
+        {renderComboBox("other")}
+      </div>
         </div>
       </div>
     </div>
