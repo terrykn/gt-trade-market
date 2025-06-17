@@ -1,10 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Navbar } from "@/components/navbar";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import ProductCard_03 from "@/components/commerce-ui/product-card-03";
-
 import {
     Dialog,
     DialogClose,
@@ -15,7 +12,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-
 import {
     Select,
     SelectContent,
@@ -23,40 +19,41 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator";
-
-import { ListedItem } from "@/app/[category]/[subcategory]/page";
+import { ListedItem } from "@/app/items/page";
 import { ListedWorld } from "@/app/listings/page";
-
 import { db } from "@/lib/firebase";
-import { collection, addDoc, getDocs, query, where, deleteDoc, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { useAuth } from "@/context/auth-context";
-
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-
 import {
     Alert,
     AlertDescription,
     AlertTitle,
 } from "@/components/ui/alert"
-
-import { CheckCircle2Icon, Trash2 } from "lucide-react";
-import { AlertCircle } from "lucide-react";
+import { CheckCircle2Icon, AlertCircle } from "lucide-react";
 import ItemNameAutocomplete from "@/components/item-name-autocomplete";
 import ProductCard_03Preview from "@/components/commerce-ui/product-card-03-preview";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Image from "next/image";
-import Link from "next/link";
-import { Timestamp } from "firebase/firestore";
 import WorldProductCard_03 from "@/components/commerce-ui/world-product-card-03";
+import itemsData from "@/data/items.json";
 
+const allTags = Array.from(
+    new Set(
+        (itemsData as any[]).flatMap((item) => item.tags || [])
+    )
+);
 
-export default function CreateListing() {
-    // listed item parameters
+export default function CreateListing({
+    onCreated,
+    onCreatedWorld,
+}: {
+    onCreated?: () => void;
+    onCreatedWorld?: () => void;
+}) {
+
     const [world, setWorld] = useState("");
     const [name, setName] = useState("");
     const [quantity, setQuantity] = useState(1);
@@ -64,10 +61,8 @@ export default function CreateListing() {
     const [unit, setUnit] = useState("WL");
     const [unitPrice, setUnitPrice] = useState("");
     const [imageUrl, setImageUrl] = useState("https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/2912/y-offset/224/window-width/32/window-height/32?format=png&fill=cb-20250605082111");
-    const [category, setCategory] = useState("");
-    const [subcategory, setSubcategory] = useState("");
+    const [tags, setTags] = useState<string[]>([]);
 
-    // listed world parameters
     const [worldForSale, setWorldForSale] = useState("");
     const [worldCategory, setWorldCategory] = useState("");
     const [worldDescription, setWorldDescription] = useState("");
@@ -78,13 +73,6 @@ export default function CreateListing() {
     const [selectedWorldId, setSelectedWorldId] = useState("");
 
     const [dialogOpen, setDialogOpen] = useState(false);
-    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-    const [deleteWorldDialogOpen, setDeleteWorldDialogOpen] = useState(false);
-
-    const [listedItems, setListedItems] = useState<ListedItem[]>([]);
-    const [listedWorlds, setListedWorlds] = useState<ListedWorld[]>([]);
-
-    const [isLoading, setIsLoading] = useState(true);
 
     const [alert, setAlert] = useState<{
         type: "success" | "error";
@@ -97,10 +85,9 @@ export default function CreateListing() {
 
     useEffect(() => {
         if (!loading && !user) {
-        router.push("/login");
+            router.push("/login");
         }
     }, [loading, user, router]);
-
 
     useEffect(() => {
         if (alert) {
@@ -124,6 +111,40 @@ export default function CreateListing() {
         }
     }, [quantity, price, unit]);
 
+    const TagSelector = ({
+        selected,
+        setSelected,
+        label = "Tags"
+    }: {
+        selected: string[];
+        setSelected: (tags: string[]) => void;
+        label?: string;
+    }) => (
+        <div>
+            <Label className="mb-1">{label}</Label>
+            <div className="flex flex-wrap gap-2 mt-1">
+                {allTags.map((tag) => (
+                    <Button
+                        key={tag}
+                        type="button"
+                        size="sm"
+                        variant={selected.includes(tag) ? "default" : "outline"}
+                        className={`text-xs px-2 py-1 rounded ${selected.includes(tag) ? "bg-blue-600 text-white" : ""}`}
+                        onClick={() =>
+                            setSelected(
+                                selected.includes(tag)
+                                    ? selected.filter((t) => t !== tag)
+                                    : [...selected, tag]
+                            )
+                        }
+                    >
+                        {tag}
+                    </Button>
+                ))}
+            </div>
+        </div>
+    );
+
     const handleCreateWorld = async () => {
         if (!user) {
             setAlert({
@@ -145,10 +166,7 @@ export default function CreateListing() {
         }
 
         try {
-            // generate a shared ID
             const newWorldDocRef = doc(collection(db, "users", user.uid, "world-listings"));
-
-            // use the same ID for both collections
             await setDoc(newWorldDocRef, newWorldListing);
             await setDoc(doc(db, "AllWorldListings", newWorldDocRef.id), newWorldListing);
 
@@ -158,9 +176,8 @@ export default function CreateListing() {
                 description: "Your new listing was added successfully.",
             });
 
-            
             setDialogOpen(false);
-            window.location.reload();
+            if (onCreatedWorld) onCreatedWorld();
         } catch (err) {
             console.error("Error creating listing:", err);
             setAlert({
@@ -192,16 +209,12 @@ export default function CreateListing() {
             unitPrice: Number(unitPrice),
             world,
             imageUrl,
-            category,
-            subcategory,
+            tags, 
             createdAt: new Date(),
         };
 
         try {
-            // generate a shared ID
             const newDocRef = doc(collection(db, "users", user.uid, "listings"));
-
-            // use the same ID for both collections
             await setDoc(newDocRef, newListing);
             await setDoc(doc(db, "AllListings", newDocRef.id), newListing);
 
@@ -212,7 +225,7 @@ export default function CreateListing() {
             });
 
             setDialogOpen(false);
-            window.location.reload();
+            if (onCreated) onCreated();
         } catch (err) {
             console.error("Error creating listing:", err);
             setAlert({
@@ -223,7 +236,7 @@ export default function CreateListing() {
         }
     };
 
-    if (loading || !user || isLoading) {
+    if (loading || !user) {
         return <div>Loading...</div>;
     }
 
@@ -268,7 +281,7 @@ export default function CreateListing() {
                             </DialogDescription>
                         </DialogHeader>
 
-                        <Tabs defaultValue="Item">
+                        <Tabs defaultValue="item">
                             <TabsList className="mb-4">
                                 <TabsTrigger value="item">Sell Item</TabsTrigger>
                                 <TabsTrigger value="world">Sell World</TabsTrigger>
@@ -285,16 +298,15 @@ export default function CreateListing() {
                                                     setName(name);
                                                     if (item) {
                                                         setImageUrl(item.imageUrl);
-                                                        setCategory(item.category.toLowerCase().replace(/\s+/g, "-"),);
-                                                        setSubcategory(item.subcategory.toLowerCase().replace(/\s+/g, "-"),);
+                                                        setTags(item.tags || []);
                                                     } else {
                                                         setImageUrl("https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/2912/y-offset/224/window-width/32/window-height/32?format=png&fill=cb-20250605082111");
-                                                        setCategory("");
-                                                        setSubcategory("");
+                                                        setTags([]);
                                                     }
                                                 }}
                                             />
                                         </div>
+                                        <TagSelector selected={tags} setSelected={setTags} />
                                         <div className="flex flex-row gap-2">
                                             <div className="grid gap-2 w-full">
                                                 <Label htmlFor="quantity">Quantity</Label>
@@ -339,8 +351,7 @@ export default function CreateListing() {
                                                         world,
                                                         imageUrl: imageUrl,
                                                         createdAt: new Date(),
-                                                        category: category,
-                                                        subcategory: subcategory
+                                                        tags: tags,
                                                     }}
                                                 />
                                             </div>

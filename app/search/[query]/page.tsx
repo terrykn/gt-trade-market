@@ -6,7 +6,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Navbar } from "@/components/navbar";
 import ProductCard_03 from "@/components/commerce-ui/product-card-03";
-import { ListedItem } from "@/app/[category]/[subcategory]/page";
+import { ListedItem } from "@/app/items/page";
 
 export default function SearchResultsPage() {
   const params = useParams();

@@ -7,7 +7,7 @@ import { collection, getDocs, query } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 import { Navbar } from "@/components/navbar";
-import { ListedItem } from "./[category]/[subcategory]/page";
+import { ListedItem } from "./items/page";
 import { ListedWorld } from "./listings/page";
 import { FeaturedPreview } from "@/components/featured-preview";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";

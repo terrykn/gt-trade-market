@@ -1,6 +1,6 @@
 "use client";
 
-import { ListedItem } from "@/app/[category]/[subcategory]/page";
+import { ListedItem } from "@/app/items/page";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { ListedWorld } from "@/app/listings/page";

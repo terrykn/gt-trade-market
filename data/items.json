@@ -1,0 +1,17 @@
+[
+  {
+    "name": "1-Day Free Subscription Token",
+    "imageUrl": "https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/2944/y-offset/1088/window-width/32/window-height/32?format=png&fill=cb-20250612135320",
+    "tags": ["tag1", "tag2"]
+  },
+  {
+    "name": "1-Year Subscription Token",
+    "imageUrl": "https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/992/y-offset/768/window-width/32/window-height/32?format=png&fill=cb-20250612135320",
+    "tags": ["tag1", "tag3"]
+  },
+  {
+    "name": "11th Anniversary Block",
+    "imageUrl": "https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/768/y-offset/1632/window-width/32/window-height/32?format=png&fill=cb-20250612135320",
+    "tags": ["tag2", "tag3"]
+  }
+]
