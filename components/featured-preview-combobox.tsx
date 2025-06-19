@@ -75,7 +75,7 @@ export function FeaturedPreviewCombobox({ input }: Props) {
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-full h-auto px-4 py-2 flex items-center justify-between min-w-0 overflow-hidden"
+            className="cursor-pointer w-full h-auto px-4 py-2 flex items-center justify-between min-w-0 overflow-hidden"
           >
             <div className="flex items-center gap-3 min-w-0">
               <div className="relative flex items-center justify-center w-10 h-10 flex-shrink-0">
@@ -92,13 +92,13 @@ export function FeaturedPreviewCombobox({ input }: Props) {
                 {value || config.label}
               </span>
             </div>
-            <ChevronsUpDown className="h-4 w-4 opacity-50 flex-shrink-0" />
+            <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50 flex-shrink-0" />
           </Button>
 
         </PopoverTrigger>
 
-        <PopoverContent className="w-full p-0">
-          <Command>
+        <PopoverContent className="w-[200px] p-0">
+          <Command className="max-h-[36vh] ">
             <CommandInput placeholder="Search type..." />
             <CommandList>
               <CommandGroup>
@@ -110,15 +110,17 @@ export function FeaturedPreviewCombobox({ input }: Props) {
                       setValue(currentValue === value ? "" : currentValue);
                       setOpen(false);
                     }}
+                    className="flex items-center justify-between gap-2 text-left"
                   >
+                    <span>{option}</span>
                     <Check
                       className={cn(
-                        "mr-2 h-4 w-4",
+                        "h-4 w-4 text-blue-600",
                         value === option ? "opacity-100" : "opacity-0"
                       )}
                     />
-                    {option}
                   </CommandItem>
+
                 ))}
               </CommandGroup>
             </CommandList>

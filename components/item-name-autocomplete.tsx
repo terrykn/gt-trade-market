@@ -42,7 +42,7 @@ export default function ItemNameAutocomplete({ value, onChange }: Props) {
 
     const partialMatches = allItems
       .filter((item) => item.name.toLowerCase().includes(lowerQuery))
-      .slice(0, 10);
+      .slice(0, 50);
 
     const exactMatch = allItems.find(
       (item) => item.name.toLowerCase() === lowerQuery
@@ -84,12 +84,13 @@ export default function ItemNameAutocomplete({ value, onChange }: Props) {
                 <div>{item.name}</div>
                 <div className="flex flex-wrap gap-1 mt-1">
                   {item.tags?.map((tag) => (
-                    <span
-                      key={tag}
-                      className="bg-gray-200 rounded px-2 py-0.5 text-xs text-gray-700"
-                    >
-                      {tag}
-                    </span>
+<span
+  key={tag}
+  className="rounded px-2 py-0.5 text-xs bg-gray-300 text-gray-800 dark:bg-gray-800 dark:text-gray-200"
+>
+  {tag.toLowerCase()}
+</span>
+
                   ))}
                 </div>
               </div>

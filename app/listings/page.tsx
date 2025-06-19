@@ -210,11 +210,14 @@ export default function ListingsPage() {
                             </Alert>
                         </div>
                     )}
-              
-                    <CreateListing
+              <div className="mb-6">
+                <CreateListing
+                    
                         onCreated={fetchUserListings}
                         onCreatedWorld={fetchWorldListings}
                     />
+              </div>
+                    
                 </div>
                 <Tabs defaultValue="items">
                     <TabsList className="mb-2">

@@ -40,6 +40,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import WorldProductCard_03 from "@/components/commerce-ui/world-product-card-03";
 import itemsData from "@/data/items.json";
 
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+import { Filter } from "lucide-react";
+
 const allTags = Array.from(
     new Set(
         (itemsData as any[]).flatMap((item) => item.tags || [])
@@ -62,6 +69,7 @@ export default function CreateListing({
     const [unitPrice, setUnitPrice] = useState("");
     const [imageUrl, setImageUrl] = useState("https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/2912/y-offset/224/window-width/32/window-height/32?format=png&fill=cb-20250605082111");
     const [tags, setTags] = useState<string[]>([]);
+    const [description, setDescription] = useState("");
 
     const [worldForSale, setWorldForSale] = useState("");
     const [worldCategory, setWorldCategory] = useState("");
@@ -114,36 +122,77 @@ export default function CreateListing({
     const TagSelector = ({
         selected,
         setSelected,
-        label = "Tags"
+        label = "Tags",
     }: {
         selected: string[];
         setSelected: (tags: string[]) => void;
         label?: string;
-    }) => (
-        <div>
-            <Label className="mb-1">{label}</Label>
-            <div className="flex flex-wrap gap-2 mt-1">
-                {allTags.map((tag) => (
-                    <Button
-                        key={tag}
-                        type="button"
-                        size="sm"
-                        variant={selected.includes(tag) ? "default" : "outline"}
-                        className={`text-xs px-2 py-1 rounded ${selected.includes(tag) ? "bg-blue-600 text-white" : ""}`}
-                        onClick={() =>
-                            setSelected(
-                                selected.includes(tag)
-                                    ? selected.filter((t) => t !== tag)
-                                    : [...selected, tag]
-                            )
-                        }
-                    >
-                        {tag}
-                    </Button>
-                ))}
+    }) => {
+        const [open, setOpen] = useState(false);
+
+        const handleTagToggle = (tag: string) => {
+            if (selected.includes(tag)) {
+                setSelected(selected.filter((t) => t !== tag));
+            } else if (selected.length < 6) {
+                setSelected([...selected, tag]);
+            }
+        };
+
+        return (
+            <div>
+                <Label className="mb-2 block">{label}</Label>
+                <Popover open={open} onOpenChange={setOpen}>
+                    <PopoverTrigger asChild>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            className={`flex items-center gap-1 ${selected.length > 0 ? "bg-blue-100 border-blue-400" : ""
+                                }`}
+                        >
+                            <Filter className="w-4 h-4" />
+                            {selected.length > 0 ? (
+                                <span className="text-xs text-blue-700">
+                                    {selected.length === 6
+                                        ? "6 selected (max)"
+                                        : `${selected.length} selected`}
+                                </span>
+                            ) : (
+                                <span className="text-xs">Select tags</span>
+                            )}
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-64 p-4 max-h-48 overflow-y-auto">
+                        <div className="flex flex-wrap gap-2">
+                            {allTags.map((tag) => (
+                                <Button
+                                    key={tag}
+                                    type="button"
+                                    size="sm"
+                                    variant={selected.includes(tag) ? "default" : "outline"}
+                                    className={`text-xs px-2 py-1 rounded ${selected.includes(tag) ? "bg-blue-600 text-white" : ""
+                                        }`}
+                                    onClick={() => handleTagToggle(tag)}
+                                >
+                                    {tag.toLowerCase()}
+                                </Button>
+                            ))}
+                        </div>
+                        {selected.length > 0 && (
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="mt-3 text-xs text-red-500"
+                                onClick={() => setSelected([])}
+                            >
+                                Clear all
+                            </Button>
+                        )}
+                    </PopoverContent>
+                </Popover>
             </div>
-        </div>
-    );
+        );
+    };
+
 
     const handleCreateWorld = async () => {
         if (!user) {
@@ -209,8 +258,9 @@ export default function CreateListing({
             unitPrice: Number(unitPrice),
             world,
             imageUrl,
-            tags, 
+            tags,
             createdAt: new Date(),
+            description
         };
 
         try {
@@ -270,7 +320,7 @@ export default function CreateListing({
             )}
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                 <DialogTrigger asChild>
-                    <Button className="mb-6" variant="outline">Create New Listing</Button>
+                    <Button className="" variant="outline">Create New Listing</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                     <form onSubmit={handleCreate}>
@@ -334,6 +384,10 @@ export default function CreateListing({
                                             <Label htmlFor="world">World</Label>
                                             <Input required id="world" maxLength={24} onChange={(e) => setWorld(e.target.value.toUpperCase())} placeholder="Enter world selling your item" />
                                         </div>
+                                        <div className="grid gap-2">
+                                            <Label htmlFor="description">Description (optional)</Label>
+                                            <Input id="description" maxLength={30} onChange={(e) => setDescription(e.target.value)} placeholder="Additional item details" />
+                                        </div>
 
                                         <Separator />
                                         <div className="grid gap-2 mb-4">
@@ -352,6 +406,7 @@ export default function CreateListing({
                                                         imageUrl: imageUrl,
                                                         createdAt: new Date(),
                                                         tags: tags,
+                                                        description
                                                     }}
                                                 />
                                             </div>
@@ -397,10 +452,7 @@ export default function CreateListing({
                                                 </SelectContent>
                                             </Select>
                                         </div>
-                                        <div className="grid gap-2">
-                                            <Label htmlFor="worldDescription">Description / Contact Info (optional)</Label>
-                                            <Input id="worldDescription" maxLength={50} onChange={(e) => setWorldDescription(e.target.value)} placeholder="Describe world or contact info to buy" />
-                                        </div>
+                                        
                                         <div className="flex flex-row gap-2">
                                             <div className="grid gap-2 w-full">
                                                 <Label htmlFor="worldPrice">Price</Label>
@@ -419,6 +471,10 @@ export default function CreateListing({
                                                     </SelectContent>
                                                 </Select>
                                             </div>
+                                        </div>
+                                        <div className="grid gap-2">
+                                            <Label htmlFor="worldDescription">Description (optional)</Label>
+                                            <Input id="worldDescription" maxLength={30} onChange={(e) => setWorldDescription(e.target.value)} placeholder="Additional world details" />
                                         </div>
                                         <Separator />
                                         <div className="grid gap-2 mb-4">

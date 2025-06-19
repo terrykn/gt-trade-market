@@ -35,7 +35,7 @@ export function FeaturedPreviewWorlds({ worlds = [] }: FeaturedPreviewWorldsProp
                 </div>
             ))}
         </div>
-        <div className="mt-2"><Button variant="outline" className="text-xs">See more...</Button></div>
+        <div className="mt-2"><Button variant="outline" className="text-xs cursor-pointer">See more...</Button></div>
     </div>
   );
 }

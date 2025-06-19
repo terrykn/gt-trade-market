@@ -79,10 +79,10 @@ export function Navbar() {
 
   const [mobileOpen, setMobileOpen] = useState(false);
   return (
-    <nav className="border-b">
+    <nav className="border-b z-12">
       {/* Top bar */}
       <div className="flex items-center justify-between">
-        <div className="text-xl font-bold p-6">Growtopia Trade Market</div>
+        <div className="text-xl font-bold p-6 cursor-pointer hover:scale-101" onClick={() => router.push("/")}>Growtopia Trade Market</div>
 
         <div className="lg:hidden">
           <SearchBar />
@@ -104,7 +104,7 @@ export function Navbar() {
           <NavigationMenu>
             <NavigationMenuList className="flex items-center">
               <NavigationMenuItem>
-                <NavigationMenuTrigger>All Items</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="cursor-pointer">All Items</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[200px] gap-2 max-h-64 overflow-y-auto">
                     <li>
@@ -121,7 +121,7 @@ export function Navbar() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>All Worlds</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="cursor-pointer">All Worlds</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[200px] max-h-64 overflow-y-auto gap-y-1 pr-2">
                     {worldPages.map((page) => (
@@ -142,7 +142,7 @@ export function Navbar() {
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
                   <Link href="/listings" className="text-sm font-medium">
-                    My Listings
+                    Listings
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>

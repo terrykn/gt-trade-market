@@ -145,12 +145,12 @@ export default function FeaturedPage() {
                   className="relative z-10"
                   width={48}
                   height={48}
-                  src="https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/2368/y-offset/1408/window-width/32/window-height/32?format=png&fill=cb-20250612135320"
+                  src="https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/320/y-offset/1312/window-width/32/window-height/32?format=png&fill=cb-20250619095551"
                   alt="item name"
                 />
               </div> 
-              <span className="font-semibold text-lg">Event: Voucher Dayz</span>
-              <Button variant="outline" className="text-xs">See more...</Button>
+              <span className="font-semibold text-lg">Event: Beach Party</span>
+              <Button variant="outline" className="text-xs cursor-pointer" onClick={() => router.push("/items?tags=beach-party")}>See more...</Button>
             </CardContent>
           </Card>
 
@@ -165,7 +165,7 @@ export default function FeaturedPage() {
                 </span>
               </span>
             </div>
-            <Card onClick={() => router.push("/events/voucher-dayz")} className="p-2 h-30 overflow-hidden rounded-lg">
+            <Card onClick={() => router.push("/events/voucher-dayz")} className="p-2 h-35 overflow-hidden rounded-lg">
               <CardContent className="relative items-center flex h-full w-full p-0 overflow-hidden rounded-lg">
                 <FeaturedPreview items={mostRecentItems} />
               </CardContent>
@@ -183,7 +183,7 @@ export default function FeaturedPage() {
                 </span>
               </span>
             </div>
-            <Card onClick={() => router.push("/events/voucher-dayz")} className="p-2 h-30 overflow-hidden rounded-lg">
+            <Card onClick={() => router.push("/events/voucher-dayz")} className="p-2 h-35 overflow-hidden rounded-lg">
               <CardContent className="relative items-center flex h-full w-full p-0 overflow-hidden rounded-lg">
                 <FeaturedPreview items={lowUnitPriceItems} />
               </CardContent>

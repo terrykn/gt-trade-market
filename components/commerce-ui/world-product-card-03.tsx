@@ -89,7 +89,7 @@ function WorldProductCard_03({
           <div className="flex flex-1 flex-col gap-2 p-4">
             <div className="flex flex-col">
               <div className="text-sm text-gray-600 dark:text-gray-400 whitespace-normal break-words">
-                Desc: {world.description}
+                Details: {world.description}
               </div>
             </div>
           </div>
