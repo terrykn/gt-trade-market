@@ -5,6 +5,12 @@ import Image from "next/image";
 import { ListedItem } from "@/app/items/page";
 import { Separator } from "../ui/separator";
 
+import { Timestamp } from "firebase/firestore";
+
+function isTimestamp(obj: any): obj is Timestamp {
+  return obj && typeof obj.toDate === "function";
+}
+
 interface ProductCard_03Props {
   item?: ListedItem;
 }
@@ -33,11 +39,11 @@ function ProductCard_03Preview({
   const defaultImageUrl =
     "https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/2912/y-offset/224/window-width/32/window-height/32?format=png&fill=cb-20250605082111";
 
-  const rawDate = item?.createdAt;
+  const rawDate = item?.createdAt as Date | Timestamp | null | undefined;
   const date =
     rawDate instanceof Date
       ? rawDate
-      : typeof rawDate?.toDate === "function"
+      : isTimestamp(rawDate)
         ? rawDate.toDate()
         : null;
 

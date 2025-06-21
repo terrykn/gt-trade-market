@@ -444,7 +444,7 @@ const handleCreate = async (e: React.FormEvent) => {
                                             <div className="w-full max-w-[200px] mx-auto">
                                                 <ProductCard_03Preview
                                                     item={{
-                                                        id: selectedListingId,
+                                                        id: name,
                                                         userId: user?.uid || 'null',
                                                         name,
                                                         quantity: Number(quantity),
@@ -531,7 +531,7 @@ const handleCreate = async (e: React.FormEvent) => {
                                             <div className="w-full max-w-[200px] mx-auto">
                                                 <WorldProductCard_03
                                                     world={{
-                                                        id: selectedWorldId,
+                                                        id: worldForSale,
                                                         userId: user.uid,
                                                         name: worldForSale,
                                                         price: Number(worldPrice),
