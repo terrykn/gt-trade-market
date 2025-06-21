@@ -38,12 +38,29 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import WorldProductCard_03 from "@/components/commerce-ui/world-product-card-03";
 import itemsData from "@/data/items.json";
 
+import { query, getCountFromServer } from "firebase/firestore";
+
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
 import { Filter } from "lucide-react";
+
+const MAX_LISTINGS = 25;
+
+async function canCreateListing(userId: string) {
+  const itemsCol = collection(db, "users", userId, "listings");
+  const worldsCol = collection(db, "users", userId, "world-listings");
+
+  const [itemsCountSnap, worldsCountSnap] = await Promise.all([
+    getCountFromServer(query(itemsCol)),
+    getCountFromServer(query(worldsCol)),
+  ]);
+
+  const totalCount = itemsCountSnap.data().count + worldsCountSnap.data().count;
+  return totalCount < MAX_LISTINGS;
+}
 
 const allTags = Array.from(
     new Set(
@@ -194,108 +211,131 @@ export default function CreateListing({
     const [isSubmitting, setIsSubmitting] = useState(false);
 
 const handleCreateWorld = async () => {
-    if (isSubmitting) return; // Prevent duplicate clicks
-    setIsSubmitting(true);
+  if (isSubmitting) return;
+  setIsSubmitting(true);
 
-    if (!user) {
-        setAlert({
-            type: "error",
-            title: "Authentication error",
-            description: "You must be logged in to create a listing.",
-        });
-        setIsSubmitting(false);
-        return;
-    }
+  if (!user) {
+    setAlert({
+      type: "error",
+      title: "Authentication error",
+      description: "You must be logged in to create a listing.",
+    });
+    setIsSubmitting(false);
+    return;
+  }
 
-    const newWorldListing = {
-        userId: user.uid,
-        name: worldForSale,
-        price: Number(worldPrice),
-        unit: worldUnit,
-        category: worldCategory,
-        description: worldDescription,
-        createdAt: new Date()
-    };
+  const allowed = await canCreateListing(user.uid);
+  if (!allowed) {
+    setAlert({
+      type: "error",
+      title: "Listing limit reached",
+      description: `You can only have up to ${MAX_LISTINGS} combined listings.`,
+    });
+    setIsSubmitting(false);
+    return;
+  }
 
-    try {
-        const newWorldDocRef = doc(collection(db, "users", user.uid, "world-listings"));
-        await setDoc(newWorldDocRef, newWorldListing);
-        await setDoc(doc(db, "AllWorldListings", newWorldDocRef.id), newWorldListing);
+  const newWorldListing = {
+    userId: user.uid,
+    name: worldForSale,
+    price: Number(worldPrice),
+    unit: worldUnit,
+    category: worldCategory,
+    description: worldDescription,
+    createdAt: new Date(),
+  };
 
-        setAlert({
-            type: "success",
-            title: "Listing created!",
-            description: "Your new listing was added successfully.",
-        });
+  try {
+    const newWorldDocRef = doc(collection(db, "users", user.uid, "world-listings"));
+    await setDoc(newWorldDocRef, newWorldListing);
+    await setDoc(doc(db, "AllWorldListings", newWorldDocRef.id), newWorldListing);
 
-        setDialogOpen(false);
-        if (onCreatedWorld) onCreatedWorld();
-    } catch (err) {
-        console.error("Error creating listing:", err);
-        setAlert({
-            type: "error",
-            title: "Failed to create listing.",
-            description: "Please try again later.",
-        });
-    } finally {
-        setIsSubmitting(false);
-    }
+    setAlert({
+      type: "success",
+      title: "Listing created!",
+      description: "Your new listing was added successfully.",
+    });
+
+    setDialogOpen(false);
+    if (onCreatedWorld) onCreatedWorld();
+  } catch (err) {
+    console.error("Error creating listing:", err);
+    setAlert({
+      type: "error",
+      title: "Failed to create listing.",
+      description: "Please try again later.",
+    });
+  } finally {
+    setIsSubmitting(false);
+  }
 };
 
 
 const handleCreate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (isSubmitting) return;
-    setIsSubmitting(true);
+  e.preventDefault();
+  if (isSubmitting) return;
+  setIsSubmitting(true);
 
-    if (!user) {
-        setAlert({
-            type: "error",
-            title: "Authentication error",
-            description: "You must be logged in to create a listing.",
-        });
-        setIsSubmitting(false);
-        return;
-    }
+  if (!user) {
+    setAlert({
+      type: "error",
+      title: "Authentication error",
+      description: "You must be logged in to create a listing.",
+    });
+    setIsSubmitting(false);
+    return;
+  }
 
-    const newListing = {
-        userId: user.uid,
-        name,
-        quantity: Number(quantity),
-        price: Number(price),
-        unit,
-        unitPrice: Number(unitPrice),
-        world,
-        imageUrl,
-        tags,
-        createdAt: new Date(),
-        description
-    };
+  const allowed = await canCreateListing(user.uid);
+  if (!allowed) {
+    setAlert({
+      type: "error",
+      title: "Listing limit reached",
+      description: `You can only have up to ${MAX_LISTINGS} combined listings.`,
+    });
+    setIsSubmitting(false);
+    return;
+  }
 
-    try {
-        const newDocRef = doc(collection(db, "users", user.uid, "listings"));
-        await setDoc(newDocRef, newListing);
-        await setDoc(doc(db, "AllListings", newDocRef.id), newListing);
+  const newListing = {
+    userId: user.uid,
+    name,
+    quantity: Number(quantity),
+    price: Number(price),
+    unit,
+    unitPrice: Number(unitPrice),
+    world,
+    imageUrl,
+    tags,
+    createdAt: new Date(),
+    description,
+  };
 
-        setAlert({
-            type: "success",
-            title: "Listing created!",
-            description: "Your new listing was added successfully.",
-        });
+  try {
+    const newDocRef = doc(collection(db, "users", user.uid, "listings"));
+    await setDoc(newDocRef, newListing);
+    await setDoc(doc(db, "AllListings", newDocRef.id), newListing);
 
-        setDialogOpen(false);
-        if (onCreated) onCreated();
-    } catch (err) {
-        console.error("Error creating listing:", err);
-        setAlert({
-            type: "error",
-            title: "Failed to create listing.",
-            description: "Please try again later.",
-        });
-    } finally {
-        setIsSubmitting(false);
-    }
+    setAlert({
+      type: "success",
+      title: "Listing created!",
+      description: "Your new listing was added successfully.",
+    });
+
+    setDialogOpen(false);
+    if (onCreated) onCreated();
+  } catch (err) {
+    console.error("Error creating listing:", err);
+    setAlert({
+      type: "error",
+      title: "Failed to create listing.",
+      description: "Please try again later.",
+    });
+  } finally {
+    setIsSubmitting(false);
+  }
 };
+
 
 
     if (loading || !user) {

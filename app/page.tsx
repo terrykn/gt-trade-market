@@ -81,11 +81,11 @@ export default function FeaturedPage() {
       (a, b) =>
         (a.createdAt as Date).getTime() < (b.createdAt as Date).getTime() ? 1 : -1
     )
-    .slice(0, 10);
+    .slice(0, 5);
 
   const mostRecentWorlds = [...listedWorlds]
     .sort((a, b) => (b.createdAt as Date).getTime() - (a.createdAt as Date).getTime())
-    .slice(0, 10);
+    .slice(0, 5);
 
 
   function getRandomElements<T>(array: T[], count: number): T[] {

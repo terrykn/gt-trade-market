@@ -62,7 +62,7 @@ const handleLoginResult = async (result: any) => {
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="w-full max-w-xs mx-auto bg-black/40 backdrop-blur-sm shadow-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome, Growtopian!</CardTitle>
+          <CardTitle className="text-xl">Growtopia Trade Market</CardTitle>
         </CardHeader>
         <CardContent>
           <form>

@@ -91,11 +91,11 @@ function ProductCard_03({
             <div className="text-sm text-gray-600 dark:text-gray-400">
               World: {item?.world}
             </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400 mt-1 mb-2 flex flex-wrap gap-1">
+            <div className="mt-2 text-sm text-gray-600 dark:text-gray-400 mt-1 mb-2 flex flex-wrap gap-1">
               {item?.tags?.map((tag) => (
                 <span
                   key={tag}
-                  className="mt-2 rounded bg-gray-200 px-2 py-0.5 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-300"
+                  className="rounded bg-gray-200 px-2 py-0.5 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-300"
                 >
                   {tag.toLowerCase()}
                 </span>

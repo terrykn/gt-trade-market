@@ -284,7 +284,7 @@ export default function ListingsPage() {
                         {listedWorlds.length === 0 ? (
                             <p className="text-muted-foreground">You have no world listings yet.</p>
                         ) : (
-                            <ul className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-4">
+                            <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
                                 {listedWorlds.map((world, index) => (
                                     <div key={world.id}>
                                         <Dialog open={deleteWorldDialogOpen && selectedWorldId === world.id} onOpenChange={(open) => {
