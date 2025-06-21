@@ -7,8 +7,13 @@ import { Separator } from "../ui/separator";
 
 import { Timestamp } from "firebase/firestore";
 
-function isTimestamp(obj: any): obj is Timestamp {
-  return obj && typeof obj.toDate === "function";
+function isTimestamp(obj: unknown): obj is Timestamp {
+  return (
+    typeof obj === "object" &&
+    obj !== null &&
+    "toDate" in obj &&
+    typeof (obj as { toDate?: unknown }).toDate === "function"
+  );
 }
 
 interface ProductCard_03Props {
