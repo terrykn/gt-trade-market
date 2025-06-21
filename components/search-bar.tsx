@@ -17,7 +17,7 @@ export type Item = {
   name: string;
   tags?: string[];
   imageUrl?: string;
-  [key: string]: any; 
+  [key: string]: unknown; 
 };
 
 

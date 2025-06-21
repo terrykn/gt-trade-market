@@ -84,12 +84,6 @@ export default function FeaturedPage() {
     .sort((a, b) => (b.createdAt as Date).getTime() - (a.createdAt as Date).getTime())
     .slice(0, 5);
 
-
-  function getRandomElements<T>(array: T[], count: number): T[] {
-    const shuffled = [...array].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
-  }
-
   const lowestPerItemNameMap = new Map<string, ListedItem>();
 
   listedItems.forEach((item) => {
