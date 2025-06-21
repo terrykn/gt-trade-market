@@ -16,9 +16,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { FeaturedPreviewWorlds } from "@/components/featured-preview-worlds";
-import { FeaturedPreviewCombobox } from "@/components/featured-preview-combobox";
 import comboBoxOptions from "@/data/combobox_options.json";
-
+import ProductCard_03 from "@/components/commerce-ui/product-card-03";
+import WorldProductCard_03 from "@/components/commerce-ui/world-product-card-03";
 
 export default function FeaturedPage() {
   const { user, loading } = useAuth();
@@ -81,11 +81,11 @@ export default function FeaturedPage() {
       (a, b) =>
         (a.createdAt as Date).getTime() < (b.createdAt as Date).getTime() ? 1 : -1
     )
-    .slice(0, 3);
+    .slice(0, 10);
 
   const mostRecentWorlds = [...listedWorlds]
     .sort((a, b) => (b.createdAt as Date).getTime() - (a.createdAt as Date).getTime())
-    .slice(0, 4);
+    .slice(0, 10);
 
 
   function getRandomElements<T>(array: T[], count: number): T[] {
@@ -131,11 +131,13 @@ export default function FeaturedPage() {
   return (
     <div>
       <Navbar />
-      <div className="px-6 py-6">
+      <div className="px-6 py-6 pt-24">
+        <div className="text-2xl mb-6 font-bold">Featured</div>
         {/* Row 1 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          <Card>
-            <CardContent className="flex flex-row h-full items-center justify-center gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <Card className="relative bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('gt_beach_party.png')" }}>
+            <div className="absolute -bottom-px left-0 right-0 h-5/6 bg-gradient-to-t from-black/90 via-black/60 to-transparent z-0 rounded-b-lg" />
+            <CardContent className="z-10 flex flex-row h-full items-center justify-center gap-4">
               <div className="relative">
                 {/* Glow Layer */}
                 <div className="absolute inset-0 z-0 animate-spin-slow pointer-events-none rounded-full bg-gradient-to-tr from-purple-400 via-pink-500 to-blue-500 blur-md opacity-60"></div>
@@ -148,83 +150,93 @@ export default function FeaturedPage() {
                   src="https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/320/y-offset/1312/window-width/32/window-height/32?format=png&fill=cb-20250619095551"
                   alt="item name"
                 />
-              </div> 
-              <span className="font-semibold text-lg">Event: Beach Party</span>
-              <Button variant="outline" className="text-xs cursor-pointer" onClick={() => router.push("/items?tags=beach-party")}>See more...</Button>
+              </div>
+              <span className="font-bold text-xl">Event: Beach Party</span>
+              <Button variant="outline" className="text-xs cursor-pointer bg-black/20 backdrop-blur-sm shadow-md" onClick={() => router.push("/items?tags=beach-party")}>See more...</Button>
             </CardContent>
           </Card>
 
-          <div className="relative">
-            {/* Badge */}
-            <div className="absolute -top-2 -left-2 z-10">
-              <span className="relative inline-block rounded-full bg-gradient-to-r from-purple-500 to-blue-700 px-3 py-1.5 text-xs font-semibold text-white">
-                NEW
-                <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-purple-400 opacity-75"></span>
-                  <span className="relative inline-flex h-3 w-3 rounded-full bg-purple-500"></span>
-                </span>
-              </span>
-            </div>
-            <Card onClick={() => router.push("/events/voucher-dayz")} className="p-2 h-35 overflow-hidden rounded-lg">
-              <CardContent className="relative items-center flex h-full w-full p-0 overflow-hidden rounded-lg">
-                <FeaturedPreview items={mostRecentItems} />
-              </CardContent>
-            </Card>
-          </div>
+          <Card className="relative bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('gt_nebula.png')" }}>
+            <div className="absolute -bottom-px left-0 right-0 h-5/6 bg-gradient-to-t from-black/90 via-black/60 to-transparent z-0 rounded-b-lg" />
+            <CardContent className="z-10 flex flex-row h-full items-center justify-center gap-4">
+              <div className="relative">
+                {/* Glow Layer */}
+                <div className="absolute inset-0 z-0 animate-spin-slow pointer-events-none rounded-full bg-gradient-to-tr from-purple-400 via-pink-500 to-blue-500 blur-md opacity-60"></div>
 
-          <div className="relative">
-            {/* Badge */}
-            <div className="absolute -top-2 -left-2 z-10">
-              <span className="relative inline-block rounded-full bg-gradient-to-r from-purple-500 to-blue-700 px-3 py-1.5 text-xs font-semibold text-white">
-                LOW PRICE
-                <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-purple-400 opacity-75"></span>
-                  <span className="relative inline-flex h-3 w-3 rounded-full bg-purple-500"></span>
-                </span>
-              </span>
-            </div>
-            <Card onClick={() => router.push("/events/voucher-dayz")} className="p-2 h-35 overflow-hidden rounded-lg">
-              <CardContent className="relative items-center flex h-full w-full p-0 overflow-hidden rounded-lg">
-                <FeaturedPreview items={lowUnitPriceItems} />
-              </CardContent>
-            </Card>
-          </div>
+                {/* Image Layer */}
+                <Image
+                  className="relative z-10"
+                  width={48}
+                  height={48}
+                  src="https://static.wikia.nocookie.net/growtopia/images/8/8f/ItemSprites.png/revision/latest/window-crop/width/32/x-offset/2368/y-offset/320/window-width/32/window-height/32?format=png&fill=cb-20250612135320"
+                  alt="globe"
+                />
+              </div>
+              <span className="font-bold text-xl">Worlds</span>
+              <Button variant="outline" className="text-xs cursor-pointer bg-black/20 backdrop-blur-sm shadow-md" onClick={() => router.push("/worlds/all")}>See more...</Button>
+            </CardContent>
+          </Card>
 
         </div>
 
         {/* Row 2 */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 md: grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 md: grid-cols-3 gap-4">
 
-          {/* Column 1: Worlds*/}
-          <Card onClick={() => router.push("/events/voucher-dayz")} className="p-2 w-full h-auto overflow-hidden rounded-lg">
-            <CardContent className="relative items-center flex h-full w-full p-0 overflow-hidden rounded-lg">
-              <FeaturedPreviewWorlds worlds={mostRecentWorlds} />
-            </CardContent>
-          </Card>
+          {/* Column 1: Special, Events */}
+          <div className="flex flex-col gap-2">
+            {renderComboBox("special")}
+            {renderComboBox("annual events")}
+            {renderComboBox("monthly events")}
+            {renderComboBox("role")}
+          </div>
 
-          {/* Column 2: Special, Events */}
-          <Card className="p-4 w-full h-auto">
-            <FeaturedPreviewCombobox input="special" />
-            <FeaturedPreviewCombobox input="annual-events" />
-            <FeaturedPreviewCombobox input="monthly-events" />
-          </Card>
+          {/* Column 2: Comboboxes 1 */}
+          <div className="flex flex-col gap-2">
+            {renderComboBox("surgery")}
+            {renderComboBox("startopia")}
+            {renderComboBox("food")}
+            {renderComboBox("fishing")}
+          </div>
 
-      {/* Column 3: Comboboxes 1 */}
-      <div className="flex flex-col gap-2">
-        {renderComboBox("surgery")}
-        {renderComboBox("startopia")}
-        {renderComboBox("cooking")}
-        {renderComboBox("fishing")}
-      </div>
-
-      {/* Column 4: Comboboxes 2 */}
-      <div className="flex flex-col gap-2">
-        {renderComboBox("clothes")}
-        {renderComboBox("building")}
-        {renderComboBox("farming")}
-        {renderComboBox("other")}
-      </div>
+          {/* Column 3: Comboboxes 2 */}
+          <div className="flex flex-col gap-2">
+            {renderComboBox("clothes")}
+            {renderComboBox("building")}
+            {renderComboBox("farming")}
+            {renderComboBox("other")}
+          </div>
         </div>
+
+        {/* Row 3 */}
+        <div className="text-2xl mt-6 mb-6 font-bold flex items-center gap-4">
+          New Items 
+          <Button variant="outline" className="text-xs cursor-pointer" onClick={() => router.push("/items?sortBy=newest")}>See more...</Button>
+        </div>
+        
+        {mostRecentItems.length === 0 ? (
+          <p>No listings found for your search.</p>
+        ) : (
+          <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {mostRecentItems.map((item, index) => (
+              <ProductCard_03 key={item.id || index} item={item} />
+            ))}
+          </ul>
+        )}
+
+        {/* Row 4 */}
+        <div className="text-2xl mt-6 mb-6 font-bold flex items-center gap-4">
+          Worlds 
+          <Button variant="outline" className="text-xs cursor-pointer" onClick={() => router.push("/worlds/all")}>See more...</Button>
+        </div>
+        {mostRecentWorlds.length === 0 ? (
+          <p>No listings found for your search.</p>
+        ) : (
+          <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {mostRecentWorlds.map((world, index) => (
+              <WorldProductCard_03 key={world.id || index} world={world} />
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );

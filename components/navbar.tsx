@@ -79,10 +79,11 @@ export function Navbar() {
 
   const [mobileOpen, setMobileOpen] = useState(false);
   return (
-    <nav className="border-b z-12">
+    <nav className="fixed top-0 left-0 right-0 z-20 bg-background border-b bg-black/20 backdrop-blur-sm shadow-md">
+
       {/* Top bar */}
       <div className="flex items-center justify-between">
-        <div className="text-xl font-bold p-6 cursor-pointer hover:scale-101" onClick={() => router.push("/")}>Growtopia Trade Market</div>
+        <div className="text-lg font-bold p-6 cursor-pointer hover:scale-101" onClick={() => router.push("/")}>growtopia.trade</div>
 
         <div className="lg:hidden">
           <SearchBar />
@@ -151,7 +152,7 @@ export function Navbar() {
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
-                  <Button className="mr-2" variant="outline" size="icon" onClick={handleLogout}>
+                  <Button className="mr-2 cursor-pointer" variant="outline" size="icon" onClick={handleLogout}>
                     <LogOut />
                   </Button>
                 </NavigationMenuLink>

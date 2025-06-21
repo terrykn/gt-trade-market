@@ -174,16 +174,23 @@ export default function ListingsPage() {
         }
     };
 
-    if (loading || !user) {
-        return <div>Loading...</div>;
+    if (loading || !user ) {
+        return (
+        <div className="flex items-center justify-center h-screen w-full">
+            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-white" />
+        </div>
+        );
     }
 
     return (
         <div>
             <Navbar />
-            <div className="flex flex-col p-6">
+            <div className="flex flex-col p-6 pt-24">
                 <div className="flex flex-row items-center gap-4">
                     <h2 className="text-xl font-bold mb-6">My Listings</h2>
+                    <span className="text-sm font-semibold mb-6">
+                    ({listedItems.length + listedWorlds.length}/25)
+                    </span>
                     {alert && (
                         <div
                             style={{
@@ -228,7 +235,7 @@ export default function ListingsPage() {
                         {listedItems.length === 0 ? (
                             <p className="text-muted-foreground">You have no item listings yet.</p>
                         ) : (
-                            <ul className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-4">
+                            <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
                                 {listedItems.map((item, index) => (
                                     <div key={item.id}>
                                         <Dialog open={deleteDialogOpen && selectedListingId === item.id} onOpenChange={(open) => {

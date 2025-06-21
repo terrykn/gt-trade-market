@@ -16,41 +16,51 @@ import { useRouter } from "next/navigation";
 import { auth, googleProvider, db } from "@/lib/firebase";
 import { signInWithPopup } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
+import { signInWithRedirect, getRedirectResult } from "firebase/auth";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const router = useRouter();
+  const isMobile = typeof window !== "undefined" && /Mobi|Android/i.test(navigator.userAgent);
 
-  const handleGoogleLogin = async () => {
-    try {
+
+const handleGoogleLogin = async () => {
+  try {
+    if (isMobile) {
+      await signInWithRedirect(auth, googleProvider);
+    } else {
       const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-
-      const userRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(userRef);
-
-      if (!docSnap.exists()) {
-        await setDoc(userRef, {
-          uid: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-          photoURL: user.photoURL,
-          createdAt: new Date().toISOString(),
-        });
-      }
-
-      router.push("/");
-    } catch (error) {
-      console.error("Google login error:", error);
-      alert("Failed to login with Google");
+      await handleLoginResult(result);
     }
-  };
+  } catch (error) {
+    console.error("Google login error:", error);
+    alert("Failed to login with Google");
+  }
+};
+
+const handleLoginResult = async (result: any) => {
+  const user = result.user;
+  const userRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(userRef);
+
+  if (!docSnap.exists()) {
+    await setDoc(userRef, {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      createdAt: new Date().toISOString(),
+    });
+  }
+
+  router.push("/");
+};
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card className="w-full max-w-xs mx-auto">
+      <Card className="w-full max-w-xs mx-auto bg-black/40 backdrop-blur-sm shadow-md">
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Welcome, Growtopian!</CardTitle>
         </CardHeader>
@@ -58,7 +68,7 @@ export function LoginForm({
           <form>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
-                <Button variant="outline" className="w-full" onClick={handleGoogleLogin} type="button">
+                <Button variant="outline" className="w-full cursor-pointer" onClick={handleGoogleLogin} type="button">
                   {/* Google icon svg */}
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
@@ -73,10 +83,6 @@ export function LoginForm({
           </form>
         </CardContent>
       </Card>
-      <div className="max-w-xs mx-auto w-full text-muted-foreground text-center text-xs">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
-      </div>
     </div>
   );
 }

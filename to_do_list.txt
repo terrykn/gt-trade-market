@@ -1,4 +1,6 @@
-
+* Fix multiple create clicks
+* Add loading animation
+* Implement listing limit
 
 * Use my source to scrape all Growtopians world advertising content and input into listings
 * Host the site

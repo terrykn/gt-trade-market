@@ -22,8 +22,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator";
-import { ListedItem } from "@/app/items/page";
-import { ListedWorld } from "@/app/listings/page";
 import { db } from "@/lib/firebase";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { useAuth } from "@/context/auth-context";
@@ -193,98 +191,112 @@ export default function CreateListing({
         );
     };
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleCreateWorld = async () => {
-        if (!user) {
-            setAlert({
-                type: "error",
-                title: "Authentication error",
-                description: "You must be logged in to create a listing.",
-            });
-            return;
-        }
+const handleCreateWorld = async () => {
+    if (isSubmitting) return; // Prevent duplicate clicks
+    setIsSubmitting(true);
 
-        const newWorldListing = {
-            userId: user.uid,
-            name: worldForSale,
-            price: Number(worldPrice),
-            unit: worldUnit,
-            category: worldCategory,
-            description: worldDescription,
-            createdAt: new Date()
-        }
-
-        try {
-            const newWorldDocRef = doc(collection(db, "users", user.uid, "world-listings"));
-            await setDoc(newWorldDocRef, newWorldListing);
-            await setDoc(doc(db, "AllWorldListings", newWorldDocRef.id), newWorldListing);
-
-            setAlert({
-                type: "success",
-                title: "Listing created!",
-                description: "Your new listing was added successfully.",
-            });
-
-            setDialogOpen(false);
-            if (onCreatedWorld) onCreatedWorld();
-        } catch (err) {
-            console.error("Error creating listing:", err);
-            setAlert({
-                type: "error",
-                title: "Failed to create listing.",
-                description: "Please try again later.",
-            });
-        }
+    if (!user) {
+        setAlert({
+            type: "error",
+            title: "Authentication error",
+            description: "You must be logged in to create a listing.",
+        });
+        setIsSubmitting(false);
+        return;
     }
 
-    const handleCreate = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (!user) {
-            setAlert({
-                type: "error",
-                title: "Authentication error",
-                description: "You must be logged in to create a listing.",
-            });
-            return;
-        }
-
-        const newListing = {
-            userId: user.uid,
-            name,
-            quantity: Number(quantity),
-            price: Number(price),
-            unit,
-            unitPrice: Number(unitPrice),
-            world,
-            imageUrl,
-            tags,
-            createdAt: new Date(),
-            description
-        };
-
-        try {
-            const newDocRef = doc(collection(db, "users", user.uid, "listings"));
-            await setDoc(newDocRef, newListing);
-            await setDoc(doc(db, "AllListings", newDocRef.id), newListing);
-
-            setAlert({
-                type: "success",
-                title: "Listing created!",
-                description: "Your new listing was added successfully.",
-            });
-
-            setDialogOpen(false);
-            if (onCreated) onCreated();
-        } catch (err) {
-            console.error("Error creating listing:", err);
-            setAlert({
-                type: "error",
-                title: "Failed to create listing.",
-                description: "Please try again later.",
-            });
-        }
+    const newWorldListing = {
+        userId: user.uid,
+        name: worldForSale,
+        price: Number(worldPrice),
+        unit: worldUnit,
+        category: worldCategory,
+        description: worldDescription,
+        createdAt: new Date()
     };
+
+    try {
+        const newWorldDocRef = doc(collection(db, "users", user.uid, "world-listings"));
+        await setDoc(newWorldDocRef, newWorldListing);
+        await setDoc(doc(db, "AllWorldListings", newWorldDocRef.id), newWorldListing);
+
+        setAlert({
+            type: "success",
+            title: "Listing created!",
+            description: "Your new listing was added successfully.",
+        });
+
+        setDialogOpen(false);
+        if (onCreatedWorld) onCreatedWorld();
+    } catch (err) {
+        console.error("Error creating listing:", err);
+        setAlert({
+            type: "error",
+            title: "Failed to create listing.",
+            description: "Please try again later.",
+        });
+    } finally {
+        setIsSubmitting(false);
+    }
+};
+
+
+const handleCreate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
+    if (!user) {
+        setAlert({
+            type: "error",
+            title: "Authentication error",
+            description: "You must be logged in to create a listing.",
+        });
+        setIsSubmitting(false);
+        return;
+    }
+
+    const newListing = {
+        userId: user.uid,
+        name,
+        quantity: Number(quantity),
+        price: Number(price),
+        unit,
+        unitPrice: Number(unitPrice),
+        world,
+        imageUrl,
+        tags,
+        createdAt: new Date(),
+        description
+    };
+
+    try {
+        const newDocRef = doc(collection(db, "users", user.uid, "listings"));
+        await setDoc(newDocRef, newListing);
+        await setDoc(doc(db, "AllListings", newDocRef.id), newListing);
+
+        setAlert({
+            type: "success",
+            title: "Listing created!",
+            description: "Your new listing was added successfully.",
+        });
+
+        setDialogOpen(false);
+        if (onCreated) onCreated();
+    } catch (err) {
+        console.error("Error creating listing:", err);
+        setAlert({
+            type: "error",
+            title: "Failed to create listing.",
+            description: "Please try again later.",
+        });
+    } finally {
+        setIsSubmitting(false);
+    }
+};
+
 
     if (loading || !user) {
         return <div>Loading...</div>;
@@ -322,7 +334,7 @@ export default function CreateListing({
                 <DialogTrigger asChild>
                     <Button className="" variant="outline">Create New Listing</Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:max-w-[425px] bg-black/40 backdrop-blur-sm shadow-md">
                     <form onSubmit={handleCreate}>
                         <DialogHeader className="mb-6">
                             <DialogTitle>Create New Listing</DialogTitle>
@@ -417,7 +429,7 @@ export default function CreateListing({
                                     <DialogClose asChild>
                                         <Button variant="outline">Cancel</Button>
                                     </DialogClose>
-                                    <Button type="submit">Create</Button>
+                                    <Button type="submit" disabled={isSubmitting}>Create</Button>
                                 </DialogFooter>
                             </TabsContent>
 
@@ -500,7 +512,7 @@ export default function CreateListing({
                                     <DialogClose asChild>
                                         <Button variant="outline">Cancel</Button>
                                     </DialogClose>
-                                    <Button type="button" onClick={() => handleCreateWorld()}>Create</Button>
+                                    <Button type="button" disabled={isSubmitting} onClick={() => handleCreateWorld()}>Create</Button>
                                 </DialogFooter>
                             </TabsContent>
                         </Tabs>

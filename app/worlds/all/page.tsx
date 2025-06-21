@@ -49,13 +49,17 @@ export default function AllWorldsPage() {
     }, []);
 
     if (loading || !user || isLoading) {
-        return <div>Loading...</div>;
+        return (
+        <div className="flex items-center justify-center h-screen w-full">
+            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-white" />
+        </div>
+        );
     }
 
     return (
         <div>
             <Navbar />
-            <div className="p-6">
+            <div className="p-6 pt-24">
                 <h2 className="text-xl font-bold mb-4">
                     All Worlds
                 </h2>

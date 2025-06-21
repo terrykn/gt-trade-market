@@ -1,96 +1,510 @@
 {
   "surgery": [
-    { "title": "Surgery Tools", "href": "" },
-    { "title": "Malady", "href": "" },
-    { "title": "Surgery Items", "href": "" }
+    {
+      "title": "Surgery Tools",
+      "href": "/items?tags=surgery-tools"
+    },
+    {
+      "title": "Malady",
+      "href": "/items?query=vile+vial&tags=surgery"
+    },
+    {
+      "title": "Surgery Items",
+      "href": "/items?tags=surgery"
+    }
   ],
   "startopia": [
-    { "title": "Startopia Tools", "href": "" },
-    { "title": "Startrek Startopia Items", "href": "" },
-    { "title": "Starship Blasts", "href": "" },
-    { "title": "Sector Ships", "href": "" }
+    {
+      "title": "Startopia Tools",
+      "href": "/items?tags=star-tools"
+    },
+    {
+      "title": "Star Trek",
+      "href": "/items?tags=star-trek"
+    },
+    {
+      "title": "Starship Blasts",
+      "href": "/items?tags=starship-blast"
+    }
   ],
-  "cooking": [
-    { "title": "Cooking Tools", "href": "" },
-    { "title": "Ingredients", "href": "" },
-    { "title": "Food", "href": "" }
+  "food": [
+    {
+      "title": "Cooking",
+      "href": "/items?tags=cooking"
+    },
+    {
+      "title": "Consumables",
+      "href": "/items?tags=consumable"
+    }
   ],
   "fishing": [
-    { "title": "Fishing Rods", "href": "" },
-    { "title": "Bait", "href": "" },
-    { "title": "Fish", "href": "" },
-    { "title": "Lobsters", "href": "" },
-    { "title": "Fishing Items", "href": "" }
+    {
+      "title": "Fishing Items",
+      "href": "/items?tags=fishing"
+    },
+    {
+      "title": "Fishing Rods",
+      "href": "/items?query=rod&tags=fishing"
+    }
   ],
   "clothes": [
-    { "title": "Hats", "href": "" },
-    { "title": "Hair", "href": "" },
-    { "title": "Face", "href": "" },
-    { "title": "Neck", "href": "" },
-    { "title": "Shirts", "href": "" },
-    { "title": "Pants", "href": "" },
-    { "title": "Shoes", "href": "" },
-    { "title": "Back", "href": "" },
-    { "title": "Hands", "href": "" },
-    { "title": "Pet Battle", "href": "" },
-    { "title": "Pets", "href": "" },
-    { "title": "Rides", "href": "" }
+    {
+      "title": "Hats",
+      "href": "/items?tags=hat"
+    },
+    {
+      "title": "Hair",
+      "href": "/items?tags=hair"
+    },
+    {
+      "title": "Face",
+      "href": "/items?tags=face"
+    },
+    {
+      "title": "Chest",
+      "href": "/items?tags=chest"
+    },
+    {
+      "title": "Shirts",
+      "href": "/items?tags=shirt"
+    },
+    {
+      "title": "Pants",
+      "href": "/items?tags=pants"
+    },
+    {
+      "title": "Feet",
+      "href": "/items?tags=feet"
+    },
+    {
+      "title": "Back",
+      "href": "/items?tags=back"
+    },
+    {
+      "title": "Hands",
+      "href": "/items?tags=hand"
+    },
+    {
+      "title": "Pet Battle",
+      "href": "/items?tags=pet-battle"
+    },
+    {
+      "title": "Pets",
+      "href": "/items?tags=pets"
+    }
   ],
   "building": [
-    { "title": "Foreground Blocks", "href": "/blocks/foreground-blocks" },
-    { "title": "Background Blocks", "href": "/blocks/background-blocks" },
-    { "title": "Non-solid Blocks", "href": "/blocks/non-solid-blocks" },
-    { "title": "Doors", "href": "/blocks/doors" },
-    { "title": "Locks", "href": "/blocks/locks" },
-    { "title": "Seats", "href": "/blocks/seats" },
-    { "title": "Treasure Blocks", "href": "/blocks/treasure-blocks" },
-    { "title": "Deadly Blocks", "href": "/blocks/deadly-blocks" },
-    { "title": "Trampoline Blocks", "href": "/blocks/trampoline-blocks" },
-    { "title": "Consumables", "href": "/blocks/consumables" },
-    { "title": "Entrances", "href": "/blocks/entrances" },
-    { "title": "Signs", "href": "/blocks/signs" },
-    { "title": "Platforms", "href": "/blocks/platforms" },
-    { "title": "Pain Blocks (Lava)", "href": "/blocks/pain-blocks-(lava)" },
-    { "title": "Pain Blocks (Acid)", "href": "/blocks/pain-blocks-(acid)" },
-    { "title": "Bouncy Blocks", "href": "/blocks/bouncy-blocks" },
-    { "title": "Pain Blocks (Spike)", "href": "/blocks/pain-blocks-(spike)" },
-    { "title": "Portals", "href": "/blocks/portals" },
-    { "title": "Checkpoints", "href": "/blocks/checkpoints" },
-    { "title": "Sheet Music", "href": "/blocks/sheet-music" },
-    { "title": "Slippery Blocks", "href": "/blocks/slippery-blocks" },
-    { "title": "Toggleable Blocks", "href": "/blocks/toggleable-blocks" },
-    { "title": "Chests", "href": "/blocks/chests" },
-    { "title": "Mailboxes", "href": "/blocks/mailboxes" },
-    { "title": "Bulletin Boards", "href": "/blocks/bulletin-boards" },
-    { "title": "Event Mystery Blocks", "href": "/blocks/event-mystery-blocks" },
-    { "title": "Random Blocks", "href": "/blocks/random-blocks" },
-    { "title": "Components", "href": "/blocks/components" },
-    { "title": "Providers", "href": "/blocks/providers" },
-    { "title": "Chemical Combiners", "href": "/blocks/chemical-combiners" },
-    { "title": "Weather Machines", "href": "/blocks/weather-machines" },
-    { "title": "Donation Boxes", "href": "/blocks/donation-boxes" },
-    { "title": "Mannequins", "href": "/blocks/mannequins" },
-    { "title": "Security Cameras", "href": "/blocks/security-cameras" },
-    { "title": "Game Blocks", "href": "/blocks/game-blocks" },
-    { "title": "Crystals", "href": "/blocks/crystals" },
-    { "title": "Pushing Blocks", "href": "/blocks/pushing-blocks" },
-    { "title": "Fishes", "href": "/blocks/fishes" },
-    { "title": "Cooking Ovens", "href": "/blocks/cooking-ovens" },
-    { "title": "Autobreaking Blocks", "href": "/blocks/autobreaking-blocks" },
+    {
+      "title": "Foreground Blocks",
+      "href": "/items?tags=foreground-blocks"
+    },
+    {
+      "title": "Background Blocks",
+      "href": "/items?tags=background-blocks"
+    },
+    {
+      "title": "Non-solid Blocks",
+      "href": "/items?tags=non-solid-blocks"
+    },
+    {
+      "title": "Doors",
+      "href": "/items?tags=doors"
+    },
+    {
+      "title": "Locks",
+      "href": "/items?tags=locks"
+    },
+    {
+      "title": "Seats",
+      "href": "/items?tags=seats"
+    },
+    {
+      "title": "Treasure Blocks",
+      "href": "/items?tags=treasure-blocks"
+    },
+    {
+      "title": "Deadly Blocks",
+      "href": "/items?tags=deadly-blocks"
+    },
+    {
+      "title": "Trampoline Blocks",
+      "href": "/items?tags=trampoline-blocks"
+    },
+    {
+      "title": "Entrances",
+      "href": "/items?tags=entrances"
+    },
+    {
+      "title": "Signs",
+      "href": "/items?tags=signs"
+    },
+    {
+      "title": "Platforms",
+      "href": "/items?tags=platforms"
+    },
+    {
+      "title": "Pain Blocks (Lava)",
+      "href": "/items?tags=pain-blocks-(lava)"
+    },
+    {
+      "title": "Pain Blocks (Acid)",
+      "href": "/items?tags=pain-blocks-(acid)"
+    },
+    {
+      "title": "Bouncy Blocks",
+      "href": "/items?tags=bouncy-blocks"
+    },
+    {
+      "title": "Pain Blocks (Spike)",
+      "href": "/items?tags=pain-blocks-(spike)"
+    },
+    {
+      "title": "Portals",
+      "href": "/items?tags=portals"
+    },
+    {
+      "title": "Checkpoints",
+      "href": "/items?tags=checkpoints"
+    },
+    {
+      "title": "Sheet Music",
+      "href": "/items?tags=sheet-music"
+    },
+    {
+      "title": "Slippery Blocks",
+      "href": "/items?tags=slippery-blocks"
+    },
+    {
+      "title": "Toggleable Blocks",
+      "href": "/items?tags=toggleable-blocks"
+    },
+    {
+      "title": "Chests",
+      "href": "/items?tags=chests"
+    },
+    {
+      "title": "Mailboxes",
+      "href": "/items?tags=mailboxes"
+    },
+    {
+      "title": "Bulletin Boards",
+      "href": "/items?tags=bulletin-boards"
+    },
+    {
+      "title": "Event Mystery Blocks",
+      "href": "/items?tags=event-mystery-blocks"
+    },
+    {
+      "title": "Random Blocks",
+      "href": "/items?tags=random-blocks"
+    },
+    {
+      "title": "Components",
+      "href": "/items?tags=components"
+    },
+    {
+      "title": "Providers",
+      "href": "/items?tags=providers"
+    },
+    {
+      "title": "Chemical Combiners",
+      "href": "/items?tags=chemical-combiners"
+    },
+    {
+      "title": "Weather Machines",
+      "href": "/items?tags=weather-machines"
+    },
+    {
+      "title": "Donation Boxes",
+      "href": "/items?tags=donation-boxes"
+    },
+    {
+      "title": "Mannequins",
+      "href": "/items?tags=mannequins"
+    },
+    {
+      "title": "Security Cameras",
+      "href": "/items?tags=security-cameras"
+    },
+    {
+      "title": "Game Blocks",
+      "href": "/items?tags=game-blocks"
+    },
+    {
+      "title": "Crystals",
+      "href": "/items?tags=crystals"
+    },
+    {
+      "title": "Pushing Blocks",
+      "href": "/items?tags=pushing-blocks"
+    },
+    {
+      "title": "Fishes",
+      "href": "/items?tags=fishes"
+    },
+    {
+      "title": "Cooking Ovens",
+      "href": "/items?tags=cooking-ovens"
+    },
+    {
+      "title": "Autobreaking Blocks",
+      "href": "/items?tags=autobreaking-blocks"
+    },
     {
       "title": "Toggleable Multi-Framed Animated Foreground Blocks",
-      "href": "/blocks/toggleable-multi-framed-animated-foreground-blocks"
+      "href": "/items?tags=toggleable-multi-framed-animated-foreground-blocks"
     }
   ],
   "farming": [
-    { "title": "Farming Tools", "href": "" },
-    { "title": "Farmables", "href": "" },
-    { "title": "Seeds", "href": "" },
-    { "title": "Bountiful", "href": "" },
-    { "title": "Role Drops", "href": "" },
-    { "title": "Farm Worlds", "href": "" }
+    {
+      "title": "Farmables",
+      "href": "/items?tags=farmable"
+    },
+    {
+      "title": "Seeds",
+      "href": "/items?query=seed"
+    },
+    {
+      "title": "Bountiful",
+      "href": "/items?tags=bountiful"
+    },
+    {
+      "title": "Farm Worlds",
+      "href": "/worlds/farm"
+    }
+  ],
+  "role": [
+    {
+      "title": "Surgeon Role",
+      "href": "/items?tags=surgeon-role"
+    },
+    {
+      "title": "Fishing Role",
+      "href": "/items?tags=fishing-role"
+    },
+    {
+      "title": "Farmer Role",
+      "href": "/items?tags=farmer-role"
+    },
+    {
+      "title": "Chef Role",
+      "href": "/items?tags=chef-role"
+    },
+    {
+      "title": "Builder Role",
+      "href": "/items?tags=builder-role"
+    },
+    {
+      "title": "Star Captain Role",
+      "href": "/items?tags=star-captain-role"
+    },
+    {
+      "title": "Other Role Items",
+      "href": "/items?tags=other-role"
+    }
+  ],
+  "special": [
+    {
+      "title": "Item of the Season (IOTS)",
+      "href": "/items?tags=iots"
+    },
+    {
+      "title": "Legendary",
+      "href": "/items?tags=legendary"
+    },
+    {
+      "title": "Marvelous",
+      "href": "/items?tags=marvelous"
+    },
+    {
+      "title": "Unobtainable",
+      "href": "/items?tags=unobtainable"
+    },
+    {
+      "title": "Growtoken",
+      "href": "/items?tags=growtoken"
+    },
+    {
+      "title": "Subscription",
+      "href": "/items?tags=subscription"
+    }
+  ],
+  "annual events": [
+    {
+      "title": "Anniversary",
+      "href": "/items?tags=anniversary"
+    },
+    {
+      "title": "Lunar New Year",
+      "href": "/items?tags=lunar-new-year"
+    },
+    {
+      "title": "Valentine's",
+      "href": "/items?tags=valentines"
+    },
+    {
+      "title": "Equinox",
+      "href": "/items?tags=equinox"
+    },
+    {
+      "title": "St. Patrick's",
+      "href": "/items?tags=st-patricks"
+    },
+    {
+      "title": "UbiWeek",
+      "href": "/items?tags=ubiweek"
+    },
+    {
+      "title": "Grow4Good",
+      "href": "/items?tags=grow4good"
+    },
+    {
+      "title": "Easter",
+      "href": "/items?tags=easter"
+    },
+    {
+      "title": "Wildlife",
+      "href": "/items?tags=wildlife"
+    },
+    {
+      "title": "Cinco De Mayo",
+      "href": "/items?tags=cinco-de-mayo"
+    },
+    {
+      "title": "Super Pineapple Party",
+      "href": "/items?tags=pineapple"
+    },
+    {
+      "title": "Beach Party",
+      "href": "/items?tags=beach-party"
+    },
+    {
+      "title": "SummerFest",
+      "href": "/items?tags=summerfest"
+    },
+    {
+      "title": "Aliens",
+      "href": "/items?tags=aliens"
+    },
+    {
+      "title": "Thanksgiving",
+      "href": "/items?tags=thanksgiving"
+    },
+    {
+      "title": "Garuda's Glory",
+      "href": "/items?tags=garuda"
+    },
+    {
+      "title": "Player Appreciation Week",
+      "href": "/items?tags=player-appreciation"
+    },
+    {
+      "title": "Balloon Warz",
+      "href": "/items?tags=balloon-warz"
+    },
+    {
+      "title": "Assassin's Creed",
+      "href": "/items?tags=assassins-creed"
+    },
+    {
+      "title": "Harvest Festival",
+      "href": "/items?tags=harvest-festival"
+    },
+    {
+      "title": "Wonder Week",
+      "href": "/items?tags=wonder-week"
+    },
+    {
+      "title": "Halloween",
+      "href": "/items?tags=halloween"
+    },
+    {
+      "title": "Black Friday",
+      "href": "/items?tags=black-friday"
+    },
+    {
+      "title": "WinterFest",
+      "href": "/items?tags=winterfest"
+    },
+    {
+      "title": "Pegasus Pursuit",
+      "href": "/items?tags=pegasus"
+    }
+  ],
+  "monthly events": [
+    {
+      "title": "Role Quest",
+      "href": "/items?tags=surgeon-role%2Cother-role%2Cchef-role%2Cbuilder-role%2Cfarmer-role%2Cfishing-role%2Cstar-captain-role"
+    },
+    {
+      "title": "Locke The Salesman",
+      "href": "/items?tags=locke"
+    },
+    {
+      "title": "Carnival",
+      "href": "/items?tags=carnival"
+    },
+    {
+      "title": "Voucher Dayz",
+      "href": "/items?tags=voucher-dayz"
+    },
+    {
+      "title": "Night of the Comet",
+      "href": "/items?tags=comet"
+    },
+    {
+      "title": "Mutant Kitchen",
+      "href": "/items?tags=mutant-kitchen"
+    },
+    {
+      "title": "g-Virus Pandemic",
+      "href": "/items?tags=pandemic"
+    },
+    {
+      "title": "All Howl's Eve",
+      "href": "/items?tags=all-howls-eve"
+    },
+    {
+      "title": "WOLFWORLD",
+      "href": "/items?tags=wolfworld"
+    },
+    {
+      "title": "The Grand Tournament",
+      "href": "/items?tags=tournament"
+    }
   ],
   "other": [
-    { "title": "Uncategorized", "href": "" }
+    {
+      "title": "Daily Challenge",
+      "href": "/items?tags=daily-challenge"
+    },
+    {
+      "title": "Geiger",
+      "href": "/items?tags=geiger"
+    },
+    {
+      "title": "Crystals",
+      "href": "/items?tags=crystals"
+    },
+    {
+      "title": "Forging",
+      "href": "/items?tags=forging"
+    },
+    {
+      "title": "Combining",
+      "href": "/items?tags=combining"
+    },
+    {
+      "title": "Mines",
+      "href": "/items?tags=mines"
+    },
+    {
+      "title": "Treasure",
+      "href": "/items?tags=treasure"
+    },
+    {
+      "title": "Ghost",
+      "href": "/items?tags=ghost"
+    }
   ]
 }

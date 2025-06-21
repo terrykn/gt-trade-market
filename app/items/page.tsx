@@ -36,13 +36,15 @@ export type ListedItem = {
 export default function ItemsPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [listedItems, setListedItems] = useState<ListedItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [sortBy, setSortBy] = useState("newest");
 
-  const searchParams = useSearchParams();
   const searchTerm = searchParams.get("query") || "";
+  const sortParam = searchParams.get("sortBy") || "newest";
+  const [sortBy, setSortBy] = useState(sortParam);
+
   const tags = (searchParams.get("tags") || "")
     .split(",")
     .filter(Boolean)
@@ -53,6 +55,10 @@ export default function ItemsPage() {
       router.push("/login");
     }
   }, [loading, user, router]);
+
+  useEffect(() => {
+    setSortBy(sortParam);
+  }, [sortParam]);
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -102,20 +108,32 @@ export default function ItemsPage() {
         return b.name.localeCompare(a.name);
       case "newest":
       default:
-        const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-        const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+        const dateA = a.createdAt ? (a.createdAt instanceof Date ? a.createdAt.getTime() : a.createdAt.toDate().getTime()) : 0;
+        const dateB = b.createdAt ? (b.createdAt instanceof Date ? b.createdAt.getTime() : b.createdAt.toDate().getTime()) : 0;
         return dateB - dateA;
+
     }
   });
 
+  const handleSortChange = (value: string) => {
+    const params = new URLSearchParams(Array.from(searchParams.entries()));
+    params.set("sortBy", value);
+    router.push(`/items?${params.toString()}`);
+  };
+
   if (loading || !user || isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen w-full">
+        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-white" />
+      </div>
+    );
   }
 
   return (
     <div>
       <Navbar />
-      <div className="p-6">
+      
+      <div className="p-6 pt-24">
         <div className="mb-6 space-y-2">
           <h2 className="text-xl font-bold">
             Showing results for "{searchTerm}"
@@ -136,12 +154,11 @@ export default function ItemsPage() {
             ) : null}
           </div>
 
-          {/* Sort Filter - now on the left */}
           <div className="flex items-center gap-2">
             <label htmlFor="sort" className="text-sm text-muted-foreground">
               Sort by:
             </label>
-            <Select value={sortBy} onValueChange={setSortBy}>
+            <Select value={sortBy} onValueChange={handleSortChange}>
               <SelectTrigger className="w-[160px] h-8">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
@@ -153,13 +170,10 @@ export default function ItemsPage() {
                 <SelectItem value="za">Z-A</SelectItem>
               </SelectContent>
             </Select>
-            
+
             <CreateListing />
           </div>
-          
         </div>
-
-        
 
         {sortedItems.length === 0 ? (
           <p>No listings found for your search.</p>
