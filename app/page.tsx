@@ -9,13 +9,10 @@ import { db } from "@/lib/firebase";
 import { Navbar } from "@/components/navbar";
 import { ListedItem } from "./items/page";
 import { ListedWorld } from "./listings/page";
-import { FeaturedPreview } from "@/components/featured-preview";
-import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { ComboBox } from "@/components/combobox";
 import Image from "next/image";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { FeaturedPreviewWorlds } from "@/components/featured-preview-worlds";
 import comboBoxOptions from "@/data/combobox_options.json";
 import ProductCard_03 from "@/components/commerce-ui/product-card-03";
 import WorldProductCard_03 from "@/components/commerce-ui/world-product-card-03";
@@ -104,12 +101,6 @@ export default function FeaturedPage() {
       lowestPerItemNameMap.set(item.name, item);
     }
   });
-
-  const lowestUnitPriceItemsSorted = Array.from(lowestPerItemNameMap.values())
-    .sort((a, b) => (b.createdAt as Date).getTime() - (a.createdAt as Date).getTime())
-    .slice(0, 20);
-
-  const lowUnitPriceItems = getRandomElements(lowestUnitPriceItemsSorted, 3);
 
   const renderComboBox = (categoryKey: keyof typeof comboBoxOptions) => {
     const items = comboBoxOptions[categoryKey];
@@ -209,10 +200,10 @@ export default function FeaturedPage() {
 
         {/* Row 3 */}
         <div className="text-2xl mt-6 mb-6 font-bold flex items-center gap-4">
-          New Items 
+          New Items
           <Button variant="outline" className="text-xs cursor-pointer" onClick={() => router.push("/items?sortBy=newest")}>See more...</Button>
         </div>
-        
+
         {mostRecentItems.length === 0 ? (
           <p>No listings found for your search.</p>
         ) : (
@@ -220,12 +211,17 @@ export default function FeaturedPage() {
             {mostRecentItems.map((item, index) => (
               <ProductCard_03 key={item.id || index} item={item} />
             ))}
+            {isLoading && (
+              <div className="flex justify-center my-4">
+                <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-white" />
+              </div>
+            )}
           </ul>
         )}
 
         {/* Row 4 */}
         <div className="text-2xl mt-6 mb-6 font-bold flex items-center gap-4">
-          Worlds 
+          Worlds
           <Button variant="outline" className="text-xs cursor-pointer" onClick={() => router.push("/worlds/all")}>See more...</Button>
         </div>
         {mostRecentWorlds.length === 0 ? (
@@ -235,6 +231,11 @@ export default function FeaturedPage() {
             {mostRecentWorlds.map((world, index) => (
               <WorldProductCard_03 key={world.id || index} world={world} />
             ))}
+            {isLoading && (
+              <div className="flex justify-center my-4">
+                <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-white" />
+              </div>
+            )}
           </ul>
         )}
       </div>

@@ -1,8 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-
 import { ListedWorld } from "@/app/listings/page";
 import { Separator } from "../ui/separator";
 

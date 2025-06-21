@@ -5,12 +5,10 @@ import { LogOut, Menu, X } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu"
 
 import Link from "next/link";
@@ -193,7 +191,7 @@ export function Navbar() {
                   {page.subcategories && page.subcategories.length > 0 && (
                     <ul className="mt-4 mb-4 space-y-1">
                       {page.subcategories.map((subcategory) => (
-                        <li key={subcategory.title}>
+                        <li key={subcategory.href}>
                           <Link
                             href={subcategory.href}
                             className="group inline-flex w-full items-center justify-start rounded-md px-2 py-1 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1"
@@ -212,7 +210,7 @@ export function Navbar() {
           <div>
             <ul className="max-h-32 overflow-y-auto">
               {worldPages.map((page) => (
-                <li>
+                <li key={page.href}>
                   <div className="mb-2">
                     <Link href={page.href} className="w-full py-1 text-sm leading-none font-medium rounded-md hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 outline-none transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1">
                       {page.title}

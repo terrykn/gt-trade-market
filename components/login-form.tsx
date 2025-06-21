@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -16,7 +15,9 @@ import { useRouter } from "next/navigation";
 import { auth, googleProvider, db } from "@/lib/firebase";
 import { signInWithPopup } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-import { signInWithRedirect, getRedirectResult } from "firebase/auth";
+import { signInWithRedirect } from "firebase/auth";
+
+import { UserCredential } from "firebase/auth";
 
 export function LoginForm({
   className,
@@ -40,7 +41,7 @@ const handleGoogleLogin = async () => {
   }
 };
 
-const handleLoginResult = async (result: any) => {
+const handleLoginResult = async (result: UserCredential) => {
   const user = result.user;
   const userRef = doc(db, "users", user.uid);
   const docSnap = await getDoc(userRef);

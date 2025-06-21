@@ -13,15 +13,23 @@ import {
 } from "@/components/ui/popover";
 import { Filter } from "lucide-react";
 
+export type Item = {
+  name: string;
+  tags?: string[];
+  imageUrl?: string;
+  [key: string]: any; 
+};
+
+
 const allTags = Array.from(
   new Set(
-    (itemsData as any[]).flatMap((item) => item.tags || [])
+    (itemsData as Item[]).flatMap((item) => item.tags || [])
   )
 );
 
 export function SearchBar() {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<Item[]>([]);
   const [focused, setFocused] = useState(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [showTags, setShowTags] = useState(false);
@@ -35,7 +43,7 @@ export function SearchBar() {
       return;
     }
 
-    const filtered = (itemsData as any[])
+    const filtered = (itemsData as Item[])
       .filter((item) =>
         item.name.toLowerCase().includes(query.toLowerCase())
       )

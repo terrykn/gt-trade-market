@@ -64,7 +64,7 @@ async function canCreateListing(userId: string) {
 
 const allTags = Array.from(
     new Set(
-        (itemsData as any[]).flatMap((item) => item.tags || [])
+        (itemsData as Item[]).flatMap((item) => item.tags || [])
     )
 );
 
@@ -91,9 +91,6 @@ export default function CreateListing({
     const [worldDescription, setWorldDescription] = useState("");
     const [worldPrice, setWorldPrice] = useState(1);
     const [worldUnit, setWorldUnit] = useState("WL");
-
-    const [selectedListingId, setSelectedListingId] = useState("");
-    const [selectedWorldId, setSelectedWorldId] = useState("");
 
     const [dialogOpen, setDialogOpen] = useState(false);
 

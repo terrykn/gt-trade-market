@@ -199,7 +199,7 @@ export default function ItemsPage() {
       <div className="p-6 pt-24">
         <div className="mb-6 space-y-2">
           <h2 className="text-xl font-bold">
-            Showing results for "{searchTerm}"
+            Showing results for &quot;{searchTerm}&quot;
           </h2>
 
           <div className="flex flex-wrap items-center gap-2">

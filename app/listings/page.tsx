@@ -90,6 +90,7 @@ export default function ListingsPage() {
             })) as ListedItem[];
             setListedItems(listings);
         } catch (err) {
+            console.log(err)
             setAlert({
                 type: "error",
                 title: "Error loading listings",
@@ -110,6 +111,7 @@ export default function ListingsPage() {
             })) as ListedWorld[];
             setListedWorlds(worldListings);
         } catch (err) {
+            console.log(err)
             setAlert({
                 type: "error",
                 title: "Error loading listings",
@@ -138,6 +140,7 @@ export default function ListingsPage() {
             });
             setDeleteDialogOpen(false);
         } catch (err) {
+            console.log(err)
             setAlert({
                 type: "error",
                 title: "Failed to delete listing",
@@ -166,6 +169,7 @@ export default function ListingsPage() {
             });
             setDeleteWorldDialogOpen(false);
         } catch (err) {
+            console.log(err)
             setAlert({
                 type: "error",
                 title: "Failed to delete listing",
@@ -236,7 +240,7 @@ export default function ListingsPage() {
                             <p className="text-muted-foreground">You have no item listings yet.</p>
                         ) : (
                             <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-                                {listedItems.map((item, index) => (
+                                {listedItems.map((item) => (
                                     <div key={item.id}>
                                         <Dialog open={deleteDialogOpen && selectedListingId === item.id} onOpenChange={(open) => {
                                             setDeleteDialogOpen(open);
@@ -285,7 +289,7 @@ export default function ListingsPage() {
                             <p className="text-muted-foreground">You have no world listings yet.</p>
                         ) : (
                             <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-                                {listedWorlds.map((world, index) => (
+                                {listedWorlds.map((world) => (
                                     <div key={world.id}>
                                         <Dialog open={deleteWorldDialogOpen && selectedWorldId === world.id} onOpenChange={(open) => {
                                             setDeleteWorldDialogOpen(open);
