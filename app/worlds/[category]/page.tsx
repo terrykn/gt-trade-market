@@ -10,13 +10,13 @@ import { Navbar } from "@/components/navbar";
 import { ListedWorld } from "@/app/listings/page";
 import WorldProductCard_03 from "@/components/commerce-ui/world-product-card-03";
 
-interface Props {
+interface pageProps {
   params: {
     category: string;
   };
 }
 
-export default function WorldCategoryPage({ params }: Props) {
+export default function WorldCategoryPage({ params }: pageProps) {
   const { category } = params;
 
   const { user, loading } = useAuth();
