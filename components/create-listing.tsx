@@ -37,6 +37,7 @@ import ProductCard_03Preview from "@/components/commerce-ui/product-card-03-prev
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import WorldProductCard_03 from "@/components/commerce-ui/world-product-card-03";
 import itemsData from "@/data/items.json";
+import { Item } from "./search-bar";
 
 import { query, getCountFromServer } from "firebase/firestore";
 
