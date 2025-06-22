@@ -9,11 +9,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import { auth, googleProvider, db } from "@/lib/firebase";
-import { signInWithPopup } from "firebase/auth";
+import { getRedirectResult, signInWithPopup } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { signInWithRedirect } from "firebase/auth";
 
@@ -27,37 +27,51 @@ export function LoginForm({
   const isMobile = typeof window !== "undefined" && /Mobi|Android/i.test(navigator.userAgent);
 
 
-const handleGoogleLogin = async () => {
-  try {
-    if (isMobile) {
-      await signInWithRedirect(auth, googleProvider);
-    } else {
-      const result = await signInWithPopup(auth, googleProvider);
-      await handleLoginResult(result);
+  const handleGoogleLogin = async () => {
+    try {
+      if (isMobile) {
+        await signInWithRedirect(auth, googleProvider);
+      } else {
+        const result = await signInWithPopup(auth, googleProvider);
+        await handleLoginResult(result);
+      }
+    } catch (error) {
+      console.error("Google login error:", error);
+      alert("Failed to login with Google");
     }
-  } catch (error) {
-    console.error("Google login error:", error);
-    alert("Failed to login with Google");
-  }
-};
+  };
 
-const handleLoginResult = async (result: UserCredential) => {
-  const user = result.user;
-  const userRef = doc(db, "users", user.uid);
-  const docSnap = await getDoc(userRef);
+  const handleLoginResult = async (result: UserCredential) => {
+    const user = result.user;
+    const userRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(userRef);
 
-  if (!docSnap.exists()) {
-    await setDoc(userRef, {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      createdAt: new Date().toISOString(),
-    });
-  }
+    if (!docSnap.exists()) {
+      await setDoc(userRef, {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        createdAt: new Date().toISOString(),
+      });
+    }
 
-  router.push("/");
-};
+    router.push("/");
+  };
+
+  useEffect(() => {
+    const checkRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result) {
+          await handleLoginResult(result); 
+        }
+      } catch (error) {
+        console.error("Redirect login error:", error);
+      }
+    };
+    checkRedirectResult();
+  }, []);
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
