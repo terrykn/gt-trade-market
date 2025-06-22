@@ -145,9 +145,9 @@ export function Navbar() {
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
-              <NavigationMenuItem>
+              {/*<NavigationMenuItem>
                 <DarkModeToggle />
-              </NavigationMenuItem>
+              </NavigationMenuItem>*/}
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
                   <Button className="mr-2 cursor-pointer" variant="outline" size="icon" onClick={handleLogout}>
