@@ -246,7 +246,7 @@ export default function ListingsPage() {
                                             setDeleteDialogOpen(open);
                                             if (!open) setSelectedListingId("");
                                         }}>
-                                            <DialogContent className="sm:max-w-[425px]">
+                                            <DialogContent className="sm:max-w-[425px] bg-black/40 backdrop-blur-sm shadow-md">
                                                 <DialogHeader className="mb-6">
                                                     <DialogTitle>Delete Listing</DialogTitle>
                                                     <DialogDescription>
@@ -295,7 +295,7 @@ export default function ListingsPage() {
                                             setDeleteWorldDialogOpen(open);
                                             if (!open) setSelectedWorldId("");
                                         }}>
-                                            <DialogContent className="sm:max-w-[425px]">
+                                            <DialogContent className="sm:max-w-[425px] bg-black/40 backdrop-blur-sm shadow-md">
                                                 <DialogHeader className="mb-6">
                                                     <DialogTitle>Delete Listing</DialogTitle>
                                                     <DialogDescription>
