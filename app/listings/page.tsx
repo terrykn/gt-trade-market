@@ -209,7 +209,7 @@ export default function ListingsPage() {
                         >
                             <Alert
                                 variant={alert.type === "success" ? "default" : "destructive"}
-                                className="flex items-center shadow-lg"
+                                className="flex items-center shadow-lg bg-black/40 backdrop-blur-sm shadow-md"
                             >
                                 {alert.type === "success" ? (
                                     <CheckCircle2Icon className="mr-2 h-6 w-6 text-green-600" />
