@@ -7,7 +7,7 @@ import { collection, getDocs, query } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 import { Navbar } from "@/components/navbar";
-import { ListedItem } from "./items/page";
+import { ListedItem } from "./items/ItemsPage";
 import { ListedWorld } from "./listings/page";
 import { Card, CardContent } from "@/components/ui/card";
 import { ComboBox } from "@/components/combobox";

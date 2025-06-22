@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import { ListedItem } from "@/app/items/page";
+import { ListedItem } from "@/app/items/ItemsPage";
 import { Separator } from "../ui/separator";
 
 import { Timestamp } from "firebase/firestore";

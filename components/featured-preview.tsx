@@ -1,6 +1,6 @@
 "use client";
 
-import { ListedItem } from "@/app/items/page";
+import { ListedItem } from "@/app/items/ItemsPage";
 import Image from "next/image";
 import { Button } from "./ui/button";
 

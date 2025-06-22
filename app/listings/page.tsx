@@ -28,7 +28,7 @@ import {
 import { CheckCircle2Icon, Trash2 } from "lucide-react";
 import { AlertCircle } from "lucide-react";
 import CreateListing from "@/components/create-listing";
-import { ListedItem } from "../items/page";
+import { ListedItem } from "../items/ItemsPage";
 
 export type ListedWorld = {
     id: string;
