@@ -113,6 +113,17 @@ export default function FeaturedPage() {
     );
   };
 
+  if (!user) {
+    return (
+      <div
+        className="flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('gt_background2.jpeg')" }}
+      >
+        
+      </div>
+    );
+  }
+
   return (
     <div>
       <Navbar />
