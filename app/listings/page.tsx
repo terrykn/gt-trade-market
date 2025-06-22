@@ -268,7 +268,7 @@ export default function ListingsPage() {
                                             <div className="absolute top-3 right-3 z-10">
                                                 <Button
                                                     size="sm"
-                                                    className="bg-gradient-to-r from-red-500 to-red-700 text-white"
+                                                    className="bg-gradient-to-r from-red-500 to-red-700 text-white cursor-pointer"
                                                     onClick={() => {
                                                         setSelectedListingId(item.id);
                                                         setDeleteDialogOpen(true);
