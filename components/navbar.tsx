@@ -13,14 +13,14 @@ import {
 
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { DarkModeToggle } from "./darkmode-toggle";
+//import { DarkModeToggle } from "./darkmode-toggle";
 import pagesData from '@/data/pages.json';
 import worldPagesData from '@/data/world_pages.json';
 
 import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { DarkModeToggleText } from "./darkmode-toggle-text";
+//import { DarkModeToggleText } from "./darkmode-toggle-text";
 import { SearchBar } from "./search-bar";
 import { Separator } from "./ui/separator";
 
@@ -174,7 +174,7 @@ export function Navbar() {
               Log Out
             </button>
           </div>
-          <DarkModeToggleText />
+          {/*<DarkModeToggleText />*/}
           <div className="text-sm font-medium">
             <Link
               href='/featured'
