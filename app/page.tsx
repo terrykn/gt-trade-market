@@ -26,13 +26,11 @@ export default function FeaturedPage() {
   const [listedItems, setListedItems] = useState<ListedItem[]>([]);
   const [listedWorlds, setListedWorlds] = useState<ListedWorld[]>([]);
 
-  /*
   useEffect(() => {
     if (!loading && !user) {
       router.push("/login");
     }
   }, [loading, user, router]);
-  */
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -116,7 +114,6 @@ export default function FeaturedPage() {
     );
   };
 
-  /*
   if (!user) {
     return (
       <div
@@ -127,7 +124,6 @@ export default function FeaturedPage() {
       </div>
     );
   }
-    */
 
   return (
     <div>

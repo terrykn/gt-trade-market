@@ -12,21 +12,23 @@ import {
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-import { auth, googleProvider, db } from "@/lib/firebase";
-import { createUserWithEmailAndPassword, getRedirectResult, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, db } from "@/lib/firebase";
+import { createUserWithEmailAndPassword, getRedirectResult, signInWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-import { signInWithRedirect } from "firebase/auth";
+//import { signInWithRedirect } from "firebase/auth";
+//import { googleProvider } from "@/lib/firebase";
+//import { signInWithPopup } from "firebase/auth";
 
-import { UserCredential } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const router = useRouter();
-  const isMobile = typeof window !== "undefined" && /Mobi|Android/i.test(navigator.userAgent);
+  //const isMobile = typeof window !== "undefined" && /Mobi|Android/i.test(navigator.userAgent);
 
-
+/*
   const handleGoogleLogin = async () => {
     try {
       if (isMobile) {
@@ -40,6 +42,7 @@ export function LoginForm({
       alert("Failed to login with Google");
     }
   };
+*/
 
   const handleLoginResult = async (result: UserCredential) => {
     const user = result.user;
@@ -67,7 +70,7 @@ export function LoginForm({
       const result = await signInWithEmailAndPassword(auth, email, password);
       await handleUserLogin(result);
     } catch (error: unknown) {
-      if (error instanceof Error && (error as any).code === "auth/user-not-found") {
+      if (error instanceof FirebaseError && error.code === "auth/user-not-found") {
         try {
           const newUser = await createUserWithEmailAndPassword(auth, email, password);
           await handleUserLogin(newUser);
