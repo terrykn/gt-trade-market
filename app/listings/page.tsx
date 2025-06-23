@@ -57,11 +57,13 @@ export default function ListingsPage() {
     const { user, loading } = useAuth();
     const router = useRouter();
 
+    /*
     useEffect(() => {
         if (!loading && !user) {
             router.push("/login");
         }
     }, [loading, user, router]);
+    */
 
     useEffect(() => {
         if (alert) {

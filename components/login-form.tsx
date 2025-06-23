@@ -83,7 +83,7 @@ export function LoginForm({
           <form>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
-                <Button variant="outline" className="w-full cursor-pointer" onClick={handleGoogleLogin} type="button">
+                <Button variant="outline" className="w-full cursor-pointer" onClick={() => router.push("/")} type="button">
                   {/* Google icon svg */}
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path

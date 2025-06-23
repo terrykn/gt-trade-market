@@ -67,11 +67,13 @@ export default function ItemsPage() {
     .filter(Boolean)
     .map((t) => t.toLowerCase());
 
+  /*
   useEffect(() => {
     if (!loading && !user) {
       router.push("/login");
     }
   }, [loading, user, router]);
+  */
 
   useEffect(() => {
     setSortBy(sortParam);
