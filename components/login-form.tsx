@@ -19,6 +19,7 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 //import { googleProvider } from "@/lib/firebase";
 //import { signInWithPopup } from "firebase/auth";
 
+import { UserCredential } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 
 export function LoginForm({
