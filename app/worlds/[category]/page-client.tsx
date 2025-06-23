@@ -31,13 +31,11 @@ export default function WorldCategoryPageClient({ params }: pageProps) {
 
   const fetchingRef = useRef(false);
 
-  /*
   useEffect(() => {
     if (!loading && !user) {
       router.push("/login");
     }
   }, [loading, user, router]);
-  */
 
   useEffect(() => {
     setIsLoading(true);

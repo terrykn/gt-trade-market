@@ -30,13 +30,11 @@ export default function AllWorldsPage() {
 
   const fetchingRef = useRef(false);
 
-  /*
   useEffect(() => {
     if (!loading && !user) {
       router.push("/login");
     }
   }, [loading, user, router]);
-  */
 
   useEffect(() => {
     setIsLoading(true);

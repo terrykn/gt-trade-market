@@ -13,7 +13,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import { auth, googleProvider, db } from "@/lib/firebase";
-import { getRedirectResult, signInWithPopup } from "firebase/auth";
+import { getRedirectResult, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { signInWithRedirect } from "firebase/auth";
 
@@ -59,6 +59,28 @@ export function LoginForm({
     router.push("/");
   };
 
+  const handleExampleLogin = async () => {
+    try {
+      const email = "terrymail13@gmail.com";
+      const password = "testpassword";
+
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      const user = result.user;
+
+      const userRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(userRef);
+
+      if (docSnap.exists()) {
+        console.log("User data:", docSnap.data());
+        router.push("/"); 
+      } else {
+        console.log("No such user document!");
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  }
+
   useEffect(() => {
     const checkRedirectResult = async () => {
       try {
@@ -83,7 +105,7 @@ export function LoginForm({
           <form>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
-                <Button variant="outline" className="w-full cursor-pointer" onClick={() => router.push("/")} type="button">
+                <Button variant="outline" className="w-full cursor-pointer" onClick={handleExampleLogin} type="button">
                   {/* Google icon svg */}
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
