@@ -42,8 +42,10 @@ export function ComboBox({
           aria-expanded={open}
           className="w-full justify-between cursor-pointer"
         >
-          {value ? options.find((opt) => opt === value) : `${label}`}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <span className="truncate inline-block overflow-hidden text-ellipsis whitespace-nowrap">
+            {value ? options.find((opt) => opt === value) : label}
+          </span>
+          <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
@@ -64,6 +66,7 @@ export function ComboBox({
                       onSelect(selected);
                     }
                   }}
+                  className="relative"
                 >
                   {option}
                   <Check

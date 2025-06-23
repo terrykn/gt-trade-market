@@ -11,7 +11,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Filter } from "lucide-react";
+import { Filter, Search } from "lucide-react";
 
 export type Item = {
   name: string;
@@ -78,16 +78,8 @@ export function SearchBar() {
   return (
     <div className="relative w-full max-w-lg z-12">
       <div className="flex gap-2">
-        <Input
-          ref={inputRef}
-          value={query}
-          placeholder="Search any item..."
-          className="w-full"
-          onChange={(e) => setQuery(e.target.value)}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setTimeout(() => setFocused(false), 200)}
-        />
-        <Popover open={showTags} onOpenChange={setShowTags}>
+
+<Popover open={showTags} onOpenChange={setShowTags}>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
@@ -139,7 +131,17 @@ export function SearchBar() {
             )}
           </PopoverContent>
         </Popover>
-        <Button variant="outline" className="cursor-pointer" onClick={handleSearch}>Search</Button>
+        <Input
+          ref={inputRef}
+          value={query}
+          placeholder="Search any item..."
+          className="w-full"
+          onChange={(e) => setQuery(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setTimeout(() => setFocused(false), 200)}
+        />
+        
+        <Button variant="outline" className="cursor-pointer" onClick={handleSearch}><Search /></Button>
       </div>
 
 

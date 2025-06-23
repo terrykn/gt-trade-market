@@ -81,7 +81,7 @@ export function Navbar() {
 
       {/* Top bar */}
       <div className="flex items-center justify-between">
-        <div className="text-lg font-bold p-6 cursor-pointer hover:scale-101" onClick={() => router.push("/")}>growtopia.trade</div>
+        <div className="text-lg font-bold p-6 cursor-pointer hover:scale-101" onClick={() => router.push("/")}></div>
 
         <div className="lg:hidden">
           <SearchBar />
