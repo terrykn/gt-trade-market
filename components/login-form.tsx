@@ -13,7 +13,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import { auth, googleProvider, db } from "@/lib/firebase";
-import { getRedirectResult, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, getRedirectResult, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { signInWithRedirect } from "firebase/auth";
 
@@ -60,33 +60,55 @@ export function LoginForm({
   };
 
   const handleExampleLogin = async () => {
+    const email = "paelen13@gmail.com";
+    const password = "testpassword";
+
     try {
-      const email = "terrymail13@gmail.com";
-      const password = "testpassword";
-
       const result = await signInWithEmailAndPassword(auth, email, password);
-      const user = result.user;
-
-      const userRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(userRef);
-
-      if (docSnap.exists()) {
-        console.log("User data:", docSnap.data());
-        router.push("/"); 
+      await handleUserLogin(result);
+    } catch (error: unknown) {
+      if (error instanceof Error && (error as any).code === "auth/user-not-found") {
+        try {
+          const newUser = await createUserWithEmailAndPassword(auth, email, password);
+          await handleUserLogin(newUser);
+        } catch (createError) {
+          console.error("Failed to create example user:", createError);
+        }
+      } else if (error instanceof Error) {
+        console.error("Login failed:", error.message);
       } else {
-        console.log("No such user document!");
+        console.error("Unknown login error:", error);
       }
-    } catch (error) {
-      console.error("Login failed:", error);
     }
-  }
+  };
+
+  const handleUserLogin = async (result: UserCredential) => {
+    const user = result.user;
+    const userRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(userRef);
+
+    if (!docSnap.exists()) {
+      await setDoc(userRef, {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName || "Example User",
+        photoURL: user.photoURL || "",
+        createdAt: new Date().toISOString(),
+      });
+      console.log("User document created.");
+    } else {
+      console.log("User data:", docSnap.data());
+    }
+
+    router.push("/");
+  };
 
   useEffect(() => {
     const checkRedirectResult = async () => {
       try {
         const result = await getRedirectResult(auth);
         if (result) {
-          await handleLoginResult(result); 
+          await handleLoginResult(result);
         }
       } catch (error) {
         console.error("Redirect login error:", error);
