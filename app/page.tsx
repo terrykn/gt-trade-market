@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import comboBoxOptions from "@/data/combobox_options.json";
 import ProductCard_03 from "@/components/commerce-ui/product-card-03";
 import WorldProductCard_03 from "@/components/commerce-ui/world-product-card-03";
+import DisplayAd from "@/components/ads/display-ad";
 
 export default function FeaturedPage() {
   const { user, loading } = useAuth();
@@ -213,6 +214,7 @@ export default function FeaturedPage() {
           <p>No listings found for your search.</p>
         ) : (
           <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            <DisplayAd />
             {mostRecentItems.map((item, index) => (
               <ProductCard_03 key={item.id || index} item={item} />
             ))}
@@ -233,6 +235,7 @@ export default function FeaturedPage() {
           <p>No listings found for your search.</p>
         ) : (
           <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            <DisplayAd />
             {mostRecentWorlds.map((world, index) => (
               <WorldProductCard_03 key={world.id || index} world={world} />
             ))}

@@ -16,6 +16,7 @@ import { db } from "@/lib/firebase";
 import { Navbar } from "@/components/navbar";
 import { ListedWorld } from "@/app/listings/page";
 import WorldProductCard_03 from "@/components/commerce-ui/world-product-card-03";
+import DisplayAd from "@/components/ads/display-ad";
 
 export default function AllWorldsPage() {
   const { user, loading } = useAuth();
@@ -128,6 +129,7 @@ export default function AllWorldsPage() {
         ) : (
           <>
             <ul className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-4">
+              <DisplayAd />
               {listedWorlds.map((world, index) => (
                 <WorldProductCard_03 key={index} world={world} />
               ))}

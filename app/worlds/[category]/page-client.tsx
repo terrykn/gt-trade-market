@@ -9,6 +9,7 @@ import { db } from "@/lib/firebase";
 import { Navbar } from "@/components/navbar";
 import { ListedWorld } from "@/app/listings/page";
 import WorldProductCard_03 from "@/components/commerce-ui/world-product-card-03";
+import DisplayAd from "@/components/ads/display-ad";
 
 interface pageProps {
   params: {
@@ -141,6 +142,7 @@ export default function WorldCategoryPageClient({ params }: pageProps) {
         ) : (
           <>
             <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+              <DisplayAd />
               {listedWorlds.map((world, index) => (
                 <WorldProductCard_03 key={index} world={world} />
               ))}
